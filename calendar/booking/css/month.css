@@ -1,0 +1,55 @@
+@charset "UTF-8";
+/* CSS Document */
+
+
+.calendar td {
+	height: 40px;
+	width:40px;
+	border: 1px solid #CCCCCC;
+	text-align: right;
+}
+td.calendarToday {
+	border: 1px solid #990000;
+}
+td.calendarHeader {
+	text-align: center;
+	vertical-align: middle;
+}
+table.calendar a {
+display: block;
+height: 40px;
+width: 40px;
+}
+
+
+
+table.calendar a:link, .calendar a:visited {
+	text-decoration: none;
+	border: none;
+	color: #000066;
+}
+table.calendar a:hover, .calendar a:focus {
+	text-decoration: none;
+	border: none;
+	color: #000066;
+}
+table.calendar a.notbooked:link, table.calendar a.notbooked:visited {
+	background-color: #CCFFCC;
+}
+table.calendar a.notbooked:focus, table.calendar a.notbooked:hover {
+	background-color: #99FF99;
+}
+table.calendar a.partbooked:link, table.calendar a.partbooked:visited {
+	background-color: #FFCC66;
+}
+table.calendar a.partbooked:focus, table.calendar a.partbooked:hover {
+	background-color: #FF9966;
+}
+table.calendar a.booked:link, table.calendar a.booked:visited {
+	background-color: #FF9999;
+}
+table.calendar a.booked:focus, table.calendar a.booked:hover {
+	background-color: #FF3300;
+}
+
+

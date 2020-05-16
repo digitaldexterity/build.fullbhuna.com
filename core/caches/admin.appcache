@@ -1,0 +1,20 @@
+CACHE MANIFEST
+# Full Bhuana
+
+/3rdparty/bootstrap/css/bootstrap.css
+/core/css/global.css
+/core/css/adminLayout.css
+/core/css/admin.css.php
+/local/css/printstyles.css
+/core/scripts/common.js
+/core/scripts/sessionTimer.js.php
+//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js
+//ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js
+
+NETWORK:
+# files that shoudl not be cached
+*
+
+FALLBACK:
+# files that in first directory shodu be replaced
+/html/ /offline.html

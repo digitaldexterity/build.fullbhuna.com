@@ -1,0 +1,268 @@
+@keyframes loading_document {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+.loading_document {
+	font-family: sans-serif;
+	opacity:0;
+	animation-delay: 2s;
+	animation-name: loading_document;
+	animation-duration: 1s;
+	animation-fill-mode:forwards;
+}
+
+ul.docs-list { /* ul can be table too */	
+	empty-cells:show;
+	table-layout:fixed;
+	border-collapse:collapse;
+	border-spacing:0px;	
+	display:table;
+	margin:0;
+	padding:0;
+	list-style:none;
+}
+
+ul.docs-list > li {
+	display:table-row;
+	margin:0;
+	padding:0;
+	list-style:none;
+}
+
+
+
+ul.docs-list > li > span {
+	display:table-cell;
+	padding-top: 2px;
+	padding-right: 10px;
+	padding-bottom: 2px;
+	padding-left: 0px;
+	 vertical-align: middle;
+}
+
+
+
+
+
+
+.docsItem a.folder,
+.docsItem a.shortcut,
+.docsItem a.document {
+	text-decoration:none;
+	color:inherit;
+	padding: 4px 0;
+	background-repeat: no-repeat;
+	background-position: 0px 50%;
+	padding-left: 20px;
+	background-image: url(../images/file.png);
+	border:none;
+}
+.large-icons .docsItem a.folder,
+.large-icons .docsItem a.shortcut,
+.large-icons .docsItem a.document {	
+	display:inline-block;
+	height:36px;
+	line-height:36px;
+	padding-left: 40px;
+	background-image:url(../images/large/file.png);
+	background-size:32px 32px;
+	
+}
+
+.docsItem .handle {
+	display:none;
+}
+
+
+.docsItem a.folder {
+	background-image: url(../images/folder.png);
+	border:none;	
+}
+.large-icons .docsItem a.folder {
+	background-image:url(../images/large/folder.png);
+}
+
+
+.docsItem a.shortcut {
+	background-image: url(../images/folder-shortcut-16.png);
+	border:none;	
+}
+
+.large-icons .docsItem a.shortcut {
+	background-image:url(../images/large/folder.png);
+}
+
+
+.docsItem.shortcuttype2 a.shortcut  {
+	background-image:url(../../core/images/icons/world.png);
+	border:none;	
+}
+
+
+.large-icons .docsItem.shortcuttype2 a.shortcut  {
+	background-image:url(../../core/images/icons-large/internet-web-browser.png);
+}
+
+
+
+.docsItem .showonhover {
+	visibility:hidden;
+}
+
+.docsItem:hover {
+	background-color:#F5F5F5;
+}
+
+.docsItem:hover .showonhover {
+	visibility:visible;
+}
+
+
+a.document.flipbook {
+	background-image: url(../../core/images/icons/book_open.png);
+}
+.large-icons a.document.flipbook {
+	background-image: url(../../core/images/icons/book_open.png);
+}
+a.document.txt, a.document.rtf  {
+	background-image:url(../images/txt.png);
+}
+
+.large-icons a.document.txt, .large-icons  a.document.rtf  {
+	background-image:url(../images/large/txt.png);
+}
+
+a.document.pdf {
+	background-image: url(../images/pdf.png);
+}
+.large-icons a.document.pdf  {
+	background-image:url(../images/large/pdf.png);
+}
+
+a.document.ppt {
+	background-image: url(../images/ppt.png);
+}
+.large-icons a.document.ppt {
+	background-image:url(../images/large/ppt.png);
+}
+
+a.document.doc, a.document.docx {
+	background-image: url(../images/doc.png);
+}
+.large-icons a.document.doc, .large-icons  a.document.docx {
+	background-image:url(../images/large/doc.png);
+}
+
+a.document.zip, a.document.tar, a.document.gzip, a.document.bz {
+	background-image: url(../images/zip.png);
+}
+ 
+a.document.jpg ,  a.document.jpe, a.document.jpeg,  a.document.png, a.document.bmp, a.document.gif,  a.document.bmp,  a.document.eps,  a.document.psd, a.document.tif, a.document.tiff {
+	background-image: url(../images/jpg.png);
+}
+.large-icons a.document.gif, .large-icons a.document.png,
+.large-icons a.document.jpg ,  .large-icons a.document.jpe, .large-icons a.document.jpeg {
+	background-image:url(../images/large/jpg.png);
+}
+
+
+a.document.xls,a.document.csv {
+	background-image: url(../images/xls.png);
+}
+.large-icons a.document.xls, .large-icons a.document.csv {
+	background-image:url(../images/large/xls.png);
+}
+
+
+a.document.avi, a.document.mov,a.document.wmv, a.document.mp4, a.document.mpe, a.document.flv,a.document.ogg,a.document.m4v, a.document.webm
+{
+	background-image: url(../images/mov.png);
+}
+.large-icons a.document.avi, .large-icons a.document.mov,.large-icons a.document.wmv, .large-icons a.document.mp4, .large-icons a.document.mpe, .large-icons a.document.flv,.large-icons a.document.ogg,.large-icons a.document.m4v, .large-icons a.document.webm
+{
+	background-image:url(../images/large/mov.png);
+}
+
+.large-icons a.document.mp3, .large-icons a.document.wav,.large-icons a.document.m4a, .large-icons a.document.wma, .large-icons a.document.ogg, .large-icons a.document.aiff
+{
+	background-image:url(../images/large/mp4.png);
+}
+
+
+
+
+
+.icon_text_useraccess {
+	padding-left: 19px !important;
+	min-height:16px;
+	background-image: url(../../core/images/icons/group.png);
+	background-repeat: no-repeat;
+	background-position: 0 50%;
+	border:none;
+	color:#999;
+}
+
+
+
+#folderheader {
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #CCC;
+	margin: 0 0 1em 0;
+}
+
+
+/*** DESKTOP VERSION ****/
+
+.documents-desktop {
+	position:relative;
+}
+
+.documents-desktop #info {
+	display:none;
+}
+
+.documents-desktop ul.docs-list,
+.documents-desktop ul.docs-list li.docsItem {
+	display:block;
+}
+
+.documents-desktop ul.docs-list li.docsItem {
+	position:absolute;
+}
+
+
+
+.documents-desktop .docsItem a.folder,
+.documents-desktop .docsItem a.shortcut,
+.documents-desktop .docsItem a.document {	
+display:block;	
+	min-width:32px;
+	max-width:64px;
+	padding:32px 0 0 0;
+	height:auto;
+	background-position: 50% 0;	
+	float:none;
+	text-align:center;
+}
+
+
+#folderheader h2 {
+	cursor:pointer;
+}
+
+
+#folderheader h2 .btn {
+	visibility:hidden;
+	font-size:14px;
+}
+
+#folderheader h2:hover .btn {
+	visibility:visible;
+}
+
+
+
+
+

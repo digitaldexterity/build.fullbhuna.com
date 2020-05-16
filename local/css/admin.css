@@ -1,0 +1,23 @@
+/* REVERT TI LEGACY MENU
+
+.adminBody #mainMenu {
+	margin-left:0 !important;
+}
+.adminBody #mainMenu:hover {
+	left:0 !important;
+	
+}
+.adminBody #mainContent {
+	width:780px !important;
+	margin-left:180px !important;
+}
+
+*/
+/* NEW MENU ITEM
+
+.adminBody nav ul #admin_link_calendar a {
+	background-image: url(/core/images/icons/date.png);
+}
+
+*/
+

@@ -1,0 +1,252 @@
+/******************************************************************************
+ * iSearch - website search engine                                            *
+ *                                                                            *
+ * Visit the iSearch homepage at http://www.isearchthenet.com/isearch         *
+ *                                                                            *
+ * Copyright (C) 2002-2005 Ian Willis. All rights reserved.                   *
+ *                                                                            *
+ * This script is free to use for non-commercial individual use.              *
+ *                                                                            *
+ * Use of this script by companies or on commercial web sites requires a      *
+ * commercial license. For commercial licence details, please visit:          *
+ *     http://www.isearchthenet.com/isearch                                   *
+ *                                                                            *
+ ******************************************************************************/
+
+/******************************************************************************
+ *                    START OF STYLE CONFIGURATION OPTIONS                    *
+ *                                                                            *
+ * Style Name     : Default                                                   *
+ * Contributed By : Ian Willis                                                *
+ * Description    : The default style used                                    *
+ ******************************************************************************/
+
+
+/* Set up some default values */
+body
+{
+    color:#000000;
+    background-color:#ffffc0;
+}
+
+body, p, h1, h2, h3, table, td
+{
+    font-family: verdana,helvetica,arial,sans-serif;
+}
+
+div {width:100%;}
+
+/* Usage :  Page heading on the search results page.
+ */
+h1.isearch
+{
+    text-align:center;
+}
+
+
+/* Usage :  To display the header line with the following messages:
+ *             "Search results for _words_."
+ *             "Showing results 1 to 10 of 17"
+ */
+table.isearch_head
+{
+}
+
+td.isearch_head
+{
+    font-size:140%;
+}
+
+/* Usage : Advanced search form.
+ */
+table.isearch_advanced
+{
+    background-color:#b8ccee;
+}
+
+
+/* Usage :  To display the page title in the results list.
+ */
+a.isearch_title:link
+{
+}
+
+a.isearch_title:visited
+{
+}
+
+
+/* Usage :  To display the page description in the results list.
+ */
+.isearch_description
+{
+    font-size:100%;
+}
+
+
+/* Usage :  To display the page score in the results list.
+ */
+.isearch_score
+{
+    font-size:12px;
+    color:#000080;
+}
+
+
+/* Usage :  To display the page url in the results list.
+ */
+a.isearch_url:link
+{
+    font-size:80%;
+}
+
+a.isearch_url:visited
+{
+    font-size:80%;
+}
+
+
+/* Usage :  To display the file size in the results list.
+ */
+.isearch_size
+{
+    font-size:80%;
+    color:#008000;
+}
+
+
+/* Usage :  To display the "Cached" string in the results list.
+ */
+a.isearch_viewcache:link
+{
+    font-size:80%;
+    color:#6f6f6f;
+}
+
+a.isearch_viewcache:visited
+{
+    font-size:80%;
+    color:#6f6f6f;
+}
+
+
+/* Usage :  To display the "<< Previous Page" and "Next Page >>" links.
+ */
+table.isearch_prevnext
+{
+}
+
+td.isearch_prevnext
+{
+}
+
+a.isearch_prevnext:link
+{
+}
+
+a.isearch_prevnext:visited
+{
+}
+
+
+/* Usage :  To display the "No matches found." string.
+ */
+h2.isearch_nomatch
+{
+    font-size:140%;
+    color:red;
+}
+
+
+/* Usage :  To display highlighted words in the page descriptions
+ */
+.isearch_highlight
+{
+    font-weight:bold;
+}
+
+
+/* Usage :  Displaying the search string in the message:
+ *              Search results for _words_.
+ */
+.isearch_search
+{
+    font-style:italic;
+}
+
+
+/* Usage :  To display the:
+ *               "This is the contents of the iSearch cache for the URL %u"
+ *          message when displaying a cached page.
+ */
+h2.isearch_cachedpage
+{
+    font-size:140%;
+}
+
+
+/* Usage :  To display the search statistics table
+ */
+table.isearch_stats {
+}
+
+table.isearch_stats th, table.isearch_stats td{
+    padding: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+table.isearch_stats th {
+    color: #ffffff;
+    background-color: #3366cc;
+}
+
+table.isearch_stats td {
+    background-color: #ffffcc;
+    color: #003399;
+}
+
+table.isearch_stats caption {
+    color: #003399;
+    font-weight: bold;
+    font-size: 17px;
+    font-style: italic;
+}
+
+
+/* Usage:  Displaying "Did you mean to search for:" test and links when
+ * displaying alternative searches.
+ */
+.isearch_suggest_title
+{
+    color: #004422;
+}
+
+a.isearch_suggest:link
+{
+    padding-left: 50px;
+    color: #008844;
+}
+
+a.isearch_suggest:visited
+{
+    padding-left: 50px;
+    color: #008844;
+}
+
+
+/* Usage: Displaying a single extra link in search results (professional version only)
+ */
+.isearch_link
+{
+    /* Set background colour for extra links */
+    background-color: #ffffc0;
+}
+
+/* Usage: Displaying all extra links in search results (professional version only)
+ */
+.isearch_link_all
+{
+    /* Add an extra space seperating links from normal results. */
+    padding-bottom: 15px;
+}

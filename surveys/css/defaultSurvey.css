@@ -1,0 +1,37 @@
+#overlay-message-wrapper {
+	top:0;
+	left:0;
+	position:fixed;
+	z-index:10000;
+	width:100%;
+	height:100%;
+	background-image:url(/core/images/black-trans50.png);
+	display:none; /* always off to start */
+}
+
+#overlay-message {
+	width:360px;
+	height:auto;
+	padding:60px 30px;
+	background-color:#FFF;
+	position:absolute;
+	z-index:10000;
+	left:50%;
+	top:50%;
+	margin-left:-200px;
+	margin-top:-100px;
+}
+
+
+
+.questionLoading {
+	visibility:hidden;
+}
+
+.question {
+	padding-bottom:15px;
+}
+
+.question-word, .question-count {
+	display:none;
+}

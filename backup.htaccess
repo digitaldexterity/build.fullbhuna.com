@@ -1,0 +1,274 @@
+#REMEMBER some .htaccess doesn't always work under NGINX, e.g page rewrite
+
+#Prevent directory listing:
+Options -Indexes
+#Options +FollowSymLinks 
+
+RewriteEngine on
+### Tell PHP that the mod_rewrite module is ENABLED.
+SetEnv HTTP_MOD_REWRITE On
+
+#Fixes Cloudflare mp4 on Safari bug
+SetEnvIfNoCase Request_URI .(?:gif|jpe?g|png|mp4|ogv|webm)$ no-gzip dont-vary
+
+
+# This is a very important security setting preventing hackers from using certain ways of accessing the sensitve information
+# stored in the config.php file, removing the following lines is not recomended
+<Files ~ ".*config\.php.*">
+    Order allow,deny
+    Deny from all
+    Satisfy all
+</Files>
+
+#RewriteRule ^Management_Agreement_fillable\.pdf$ /?page=viewer&viewer=G&fileID=1 [R=301,L]
+
+
+#Basic page redirect example (includes any query string)
+#Redirect 301 /news/index.php /local/news/index.php
+#RedirectMatch 301 /dundee-science-festival/home/home/ http://www.dundeesciencecentre.org.uk/dundee-science-festival/dsf-home/#
+
+#Redirect 301 /contents/dundee_science_festival.html http://www.dundeesciencecentre.org.uk/dundee-science-festival/home/
+
+#301 Redirect Entire Directory
+#RedirectMatch 301 /old/directory/(.*) /new/directory//$1
+
+#ErrorDocument 404 /errors/404.php
+### sometimes required for modrewrite:
+#Options +FollowSymLinks 
+
+
+### compress text, html, javascript, css, xml:
+<IfModule mod_deflate.c>
+  # Compress HTML, CSS, JavaScript, Text, XML and fonts
+  AddOutputFilterByType DEFLATE application/javascript
+  AddOutputFilterByType DEFLATE application/rss+xml
+  AddOutputFilterByType DEFLATE application/vnd.ms-fontobject
+  AddOutputFilterByType DEFLATE application/x-font
+  AddOutputFilterByType DEFLATE application/x-font-opentype
+  AddOutputFilterByType DEFLATE application/x-font-otf
+  AddOutputFilterByType DEFLATE application/x-font-truetype
+  AddOutputFilterByType DEFLATE application/x-font-ttf
+  AddOutputFilterByType DEFLATE application/x-javascript
+  AddOutputFilterByType DEFLATE application/xhtml+xml
+  AddOutputFilterByType DEFLATE application/xml
+  AddOutputFilterByType DEFLATE font/opentype
+  AddOutputFilterByType DEFLATE font/otf
+  AddOutputFilterByType DEFLATE font/ttf
+  AddOutputFilterByType DEFLATE image/svg+xml
+  AddOutputFilterByType DEFLATE image/x-icon
+  AddOutputFilterByType DEFLATE text/css
+  AddOutputFilterByType DEFLATE text/html
+  AddOutputFilterByType DEFLATE text/javascript
+  AddOutputFilterByType DEFLATE text/plain
+  AddOutputFilterByType DEFLATE text/xml
+
+  # Remove browser bugs (only needed for really old browsers)
+  BrowserMatch ^Mozilla/4 gzip-only-text/html
+  BrowserMatch ^Mozilla/4\.0[678] no-gzip
+  BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+  Header append Vary User-Agent
+</IfModule>
+
+### CACHING
+<IfModule mod_headers.c>
+Header set Connection keep-alive
+
+### Cache-control headers
+    ### 2 HOURS
+    #<filesMatch "*">
+    #Header set Cache-Control "max-age=7200, must-revalidate"
+    #</filesMatch>
+
+    ### 480 weeks - 290304000
+    ### 1 Month for all your static assets
+ <filesMatch ".(ico|pdf|flv|jpg|jpeg|png|gif|js|css|swf|svg)$">
+ Header set Cache-Control "max-age=2592000, public"
+ </filesMatch>
+ 
+ ### 1 DAYS for rss feeds and robots
+ <filesMatch ".(xml|txt)$">
+ Header set Cache-Control "max-age=86400, public, must-revalidate"
+ </filesMatch>
+  
+ ### 4 HOURS for your real articles files
+ <filesMatch ".(html|htm)$">
+ Header set Cache-Control "max-age=14400, must-revalidate"
+ </filesMatch>
+</IfModule> 
+
+
+
+
+
+
+
+
+
+# redirect to primary domain
+#RewriteCond %{HTTP_HOST} ^(www\.)?domain\.co\.uk$ [OR,NC]
+#RewriteCond %{HTTP_HOST} ^(www\.)?domain\.asia$ [NC]
+#RewriteRule ^(.*)$ https://www.domain.com/$1 [R=301,L]
+
+
+# add https and www rules
+#RewriteCond %{HTTPS} off [NC]
+#RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+#RewriteCond %{HTTP_HOST} !^www\.(.*)$ [NC]
+#RewriteRule ^(.*)$ https://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+
+
+
+RewriteRule ^blog/rss/([^/\.]+)/?$ /blogs/blog.rss.php?blogID=$1
+RewriteRule ^blog/([^/\.]+)/?$ /blog/$1/page0
+RewriteRule ^blog/([^/\.]+)/page([^/\.]+)/?$ /blogs/blog.php?blogID=$1&pageNum_rsBlogEntries=$2
+RewriteRule ^blog/([^/\.]+)/recent/([^/\.]+)/([^/\.]+)/?$ /blogs/blogindex.php?blogID=$1&year=$2&month=$3
+RewriteRule ^blog/([^/\.]+)/([^/\.]+)/?$ /blogs/blogentry.php?blogentryID=$2
+####QSA = Query String Append -allow query strings
+RewriteRule ^shop/?$ /products/index.php
+RewriteRule ^shop/([^/\.]+)/?$ /shop/$1/page0 [L,QSA]
+RewriteRule ^shop/([^/\.]+)/page([^/\.]+)?$ /products/index.php?categoryID=$1&pageNum_rsProduct=$2 [L,QSA]
+RewriteRule ^shop/([^/\.]+)/all/?$ /products/
+RewriteRule ^shop/([^/\.]+)/by/([^/\.]+)/page([^/\.]+)?$ /products/index.php?categoryID=$1&manufacturerID=$2&pageNum_rsProduct=$3 [L,QSA]
+RewriteRule ^shop/([^/\.]+)/by/([^/\.]+)/([^/\.]+)/?$ /products/product.php?productID=$3&categoryID=$1&manufacturerID=$2 [L,QSA]
+RewriteRule ^shop/([^/\.]+)/by/([^/\.]+)/?$ /products/index.php?categoryID=$1&manufacturerID=$2 [L,QSA]
+RewriteRule ^shop/([^/\.]+)/([^/\.]+)/page([^/\.]+)?$ /products/index.php?categoryID=$1&productID=$2&pageNum_rsProduct=$3 [L,QSA]
+RewriteRule ^shop/([^/\.]+)/([^/\.]+)/?$ /products/product.php?productID=$2 [L,QSA]
+RewriteRule ^items/([^/\.]+)/?$ /news/index.php?newssectionID=$1  [NC,QSA]
+RewriteRule ^items/([^/\.]+)/page([^/\.]+)/?$ /news/index.php?newssectionID=$1&pageNum_rsNews=$2  [NC,QSA]
+RewriteRule ^items/([^/\.]+)/([^/\.]+)/?$ /news/story.php?newsID=$2  [NC,QSA]
+RewriteRule ^terms/([^/\.]+)/?$ /search/index.php?s=$1
+
+### convert old articles to new
+RewriteRule ^content/(.*)$ $1 [NC,R=301]
+### if not an existing file or directory then treat as article
+RewriteCond %{SCRIPT_FILENAME} !-f
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteRule ^([^/\.]+)/([^/\.]+)/? /articles/article.php?sectionID=$1&articleID=$2 [NC,QSA]
+RewriteCond %{SCRIPT_FILENAME} !-f
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteRule ^([^/\.]+)/? /articles/index.php?sectionID=$1 [NC,QSA]
+
+#changes /index.php to /
+#RewriteRule ^(.*)$ /index.php?/$1 [L]
+
+
+
+#Redirects all files that end in .html to be served from filename.php so it looks like all your pages are .html but really they are .php
+#RewriteRule ^(.*)\.html$ $1.php [R=301,L]
+
+
+#php_value session.use_only_cookies 1 
+#php_value session.use_trans_sid 0
+
+###add the following to /Uploads:
+#php_flag engine off
+
+### Deny easy access to htaccess
+#<Files ~ "^.*\.([Hh][Tt][Aa])">
+#order allow,deny
+#deny from all
+#</Files>
+
+# Deny easy access to php.ini
+#<Files php.ini>
+#deny from all
+#</Files>
+
+### Specify comments posts file
+#RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /.*/wp-comments-post\.php.*\ HTTP/ [NC]
+#RewriteRule .* - [F,NS,L]
+
+### Block no-referrer requests
+#RewriteCond %{REQUEST_METHOD} POST
+#RewriteCond %{REQUEST_URI} .wp-comments-post\.php*
+#RewriteCond %{HTTP_USER_AGENT} !^.*mozilla.* [OR,NC]
+#RewriteCond %{HTTP_USER_AGENT} !^.*google.* [OR,NC]
+#RewriteCond %{HTTP_USER_AGENT} !^.*slurp.* [OR,NC]
+#RewriteCond %{HTTP_USER_AGENT} !^.*msn.* [NC]
+#RewriteCond %{HTTP_USER_AGENT} ^$ [NC]
+
+### Block proxies from commenting
+#RewriteCond %{REQUEST_METHOD} =POST
+#RewriteCond %{HTTP:VIA}%{HTTP:FORWARDED}%{HTTP:USERAGENT_VIA}%{HTTP:X_FORWARDED_FOR}%{HTTP:PROXY_CONNECTION} !^$ [OR]
+#RewriteCond %{HTTP:XPROXY_CONNECTION}%{HTTP:HTTP_PC_REMOTE_ADDR}%{HTTP:HTTP_CLIENT_IP} !^$
+#RewriteCond %{REQUEST_URI} !^/(wp-login.php|wp-admin/|wp-content/plugins/|wp-includes/).* [NC]
+#RewriteRule .* - [F,NS,L]
+
+### Deny post with no user agent
+#RewriteCond %{REQUEST_METHOD} =POST
+#RewriteCond %{HTTP_USER_AGENT} ^-?$
+#RewriteCond %{REQUEST_URI} !^/(wp-login.php|wp-admin/|wp-content/plugins/|wp-includes/).* [NC]
+#RewriteRule .* - [F,NS,L]
+
+### Deny exploit using bogus graphics
+#RewriteCond %{HTTP:Content-Disposition} \.php [NC]
+#RewriteCond %{HTTP:Content-Type} image/.+ [NC]
+#RewriteRule .* - [F,NS,L]
+
+### Deny requests with no host header
+#RewriteCond %{REQUEST_URI} !^/(wp-login.php|wp-admin/|wp-content/plugins/|wp-includes/).* [NC]
+#RewriteCond %{HTTP_HOST} ^$
+#RewriteRule .* - [F,NS,L]
+
+### Deny bad content type
+#RewriteCond %{REQUEST_METHOD} =POST
+#RewriteCond %{HTTP:Content-Type} !^(application/x-www-form-urlencoded|multipart/form-data.*(boundary.*)?)$ [NC]
+#RewriteCond %{REQUEST_URI} !^/(wp-login.php|wp-admin/|wp-content/plugins/|wp-includes/).* [NC]
+#RewriteRule .* - [F,NS,L]
+
+### Deny common exploits
+#RewriteCond %{REQUEST_URI} !^/(wp-login.php|wp-admin/|wp-content/plugins/|wp-includes/).* [NC]
+#RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ ///.*\ HTTP/ [NC,OR]
+#RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /.*\?\=?(http|ftp|ssl|https):/.*\ HTTP/ [NC,OR]
+#RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /.*\?\?.*\ HTTP/ [NC,OR]
+#RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /.*\.(asp|ini|dll).*\ HTTP/ [NC,OR]
+#RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /.*\.(htpasswd|htaccess|aahtpasswd).*\ HTTP/ [NC]
+#RewriteRule .* - [F,NS,L]
+
+### proc/self/environ? no way!
+#RewriteCond %{QUERY_STRING} proc/self/environ [OR]
+ 
+### Block out any script trying to set a mosConfig value through the URL
+#RewriteCond %{QUERY_STRING} mosConfig_[a-zA-Z_]{1,21}(=|\%3D) [OR]
+ 
+### Block out any script trying to base64_encode crap to send via URL
+#RewriteCond %{QUERY_STRING} base64_encode.*(.*) [OR]
+ 
+### Block out any script that includes a <script> tag in URL
+#RewriteCond %{QUERY_STRING} (<|%3C).*script.*(>|%3E) [NC,OR]
+ 
+### Block out any script trying to set a PHP GLOBALS variable via URL
+#RewriteCond %{QUERY_STRING} GLOBALS(=|[|\%[0-9A-Z]{0,2}) [OR]
+ 
+### Block out any script trying to modify a _REQUEST variable via URL
+#RewriteCond %{QUERY_STRING} _REQUEST(=|[|\%[0-9A-Z]{0,2})
+ 
+### Send all blocked request to homepage with 403 Forbidden error!
+#RewriteRule ^(.*)$ index.php [F,L]
+
+### Deny unsafe characters
+#RewriteCond %{REQUEST_URI} !^/(wp-login.php|wp-admin/|wp-content/plugins/|wp-includes/).* [NC]
+#RewriteCond %{THE_REQUEST} !^[A-Z]{3,9}\ [a-zA-Z0-9\.\+_/\-\?\=\&]+\ HTTP/ [NC]
+#RewriteRule .* - [F,NS,L]
+
+### Always use HTTPS
+# RewriteCond %{HTTPS} off
+# RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+
+
+#### Hide Mac ds_store (security)
+#<FilesMatch '^\.[Dd][Ss]_[Ss]'>
+#Order allow, deny
+#Deny from all
+#</FilesMatch>
+
+### MAINTENANCE-PAGE REDIRECT
+#<IfModule mod_rewrite.c>
+# RewriteEngine on
+# RewriteCond %{REMOTE_ADDR} !^123\.456\.789\.000
+# RewriteCond %{REQUEST_URI} !/maintenance.html$ [NC]
+# RewriteCond %{REQUEST_URI} !\.(jpe?g?|png|gif) [NC]
+# RewriteRule .* /maintenance.html [R=302,L]
+#</IfModule>

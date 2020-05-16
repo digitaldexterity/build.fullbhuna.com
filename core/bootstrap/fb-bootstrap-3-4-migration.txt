@@ -1,0 +1,5 @@
+.btn-default -> .btn-secondary (but as this has a different style have added to bootstrap-fb-theme.css
+
+.navbar-default -> navbar-expand-lg navbar-light bg-light (and continer-fluid within not required)
+
+all spaces within flex items form-inline are removed, so need to be readded

@@ -1,0 +1,357 @@
+/* Mobile first; then... */  
+@media (min-width: 768px) {
+	/* small eg iPad portrait */  
+}
+@media (min-width: 992px) {
+	/* medium, e.g iPad landscape, older monitors, laptops  */
+}
+@media (min-width: 1200px) {
+  /* large, e.g newer monitors, laptops */
+}
+html, body {
+	width:100%;
+	height:100%;
+}
+.adminBody.rank7 .rank8, .adminBody.rank7 .rank9, .adminBody.rank7 .rank10,
+.adminBody.rank8 .rank9, .adminBody.rank8 .rank10,
+.adminBody.rank9 .rank10 {
+	display:none !important;
+}
+
+/* override Bootstrap */
+
+.adminBody legend { 
+	border:none;
+	margin:0;
+	font-size:12px;
+	width:auto;
+}
+
+.adminBody label {
+	font-weight:normal;
+}
+
+/* end override bootstrap */
+
+body  {
+	background-color:rgb(102,102,102);
+}
+
+
+
+.adminBody header {
+	color: #FFF;
+	background-color: #333333;
+	box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	padding: 15px 0;
+	position: relative;
+}
+
+
+
+.adminBody header .title {
+	text-align:center;	
+}
+
+.adminBody header  a {
+	text-decoration:none;
+	color:#FFF;
+}
+
+.adminBody header .logo {	
+	background-image:url(/core/images/full_bhuna_solid.svg);
+	background-repeat:no-repeat;
+	background-position:center center;
+	background-size:contain;	
+	height: 80px;
+	text-indent:-999em;
+	display: block;
+}
+
+@media (min-width: 768px) {
+	.adminBody header .logo {
+		background-position:right center;
+
+	}
+	.adminBody header .title {
+	text-align:left;	
+	font-size:4em;
+	
+	
+}
+}
+
+.adminBody main {
+	background-color:#FFF;
+	min-height:400px;
+
+}
+
+
+
+.adminBody main .preferences h1 {
+	background-image: url(../images/icons-large/preferences-desktop-theme.png);
+	background-repeat: no-repeat;	
+	padding-left: 38px;
+	background-position: 0px center;
+}
+
+
+
+
+
+
+
+.adminBody main .furniture h1 {
+	background-image: url(../images/icons-large/picture-frame.png);
+	background-repeat: no-repeat;	
+	padding-left: 38px;
+	background-position: 0px center;
+}
+
+.adminBody main .help h1 {
+	background-image: url(../images/icons-large/help.png);
+	background-repeat: no-repeat;	
+	padding-left: 38px;
+	background-position: 0px center;
+}
+
+
+.adminBody main .container {
+	padding-top:15px;
+	padding-bottom:15px;
+}
+
+
+
+
+
+
+
+.adminBody main .dashboard img {
+	padding: 0 20px;
+}
+.adminBody.bootstrap main .dashboard img {
+	padding: 0;
+}
+
+.page.dashboard .row > div {
+	margin-bottom:15px;
+}
+
+.page.dashboard .row > div > div {
+	background:#fdfdfd;
+	padding:15px;
+	border-radius:4px;
+	
+}
+@media (min-width: 992px) {
+	.page.dashboard .row > div > div {
+		height:100%;
+	}
+}
+
+.page.dashboard .row > div > div h3 {
+	margin-top:0;
+}
+
+.adminBody footer { 
+
+	padding: 20px 0; 
+	
+	color:#FFFFFF;
+} 
+
+.adminBody footer a { 	
+	color:inherit;
+	text-decoration:none;
+} 
+
+.adminBody footer a:hover { 
+	text-decoration:underline;
+} 
+
+.adminBody #regionForm {
+	float:right;
+}
+
+
+
+
+#googlemap {
+	height: 450px;
+}
+
+.adminBody .hamburger {
+	position:absolute;
+	left:15px;
+	bottom:15px;
+	font-size:2em;
+}
+.adminBody nav.admin-main-menu {
+	box-sizing:border-box;
+	padding: 0 5px 0 0;	
+	width: 165px;
+	z-index:1;	
+	overflow:hidden;
+	background-color: #F1F1F1;	
+	position:absolute;
+	z-index:300;
+	left:0;
+	top:100%;
+	margin-left:-165px;	
+	-webkit-transition: left 0.3s ease-in-out;
+	-moz-transition: left 0.3s ease-in-out;
+	-o-transition: left 0.3s ease-in-out;
+	-ms-transition: left 0.3s ease-in-out;
+	transition: left 0.3s ease-in-out;
+}
+
+.adminBody nav.admin-main-menu.open {
+	left:165px;
+}
+@media (min-width: 768px) {
+	/* Bootstrap Sticky Menu */
+.adminBody nav.admin-main-menu.affix {
+	top:0 ;
+	position:fixed;
+	
+}
+
+	.adminBody nav.admin-main-menu.open {
+		left:0;
+	}
+	.adminBody .hamburger {
+		display:none;
+	}
+	.adminBody nav.admin-main-menu {
+		margin-left:-140px;
+		box-shadow: 0 1px 3px rgba(0,0,0,.2);	
+	}
+	.adminBody nav.admin-main-menu:hover {
+	left:140px;	
+}
+
+}
+
+
+
+.adminBody nav.admin-main-menu ul {
+	list-style:none;
+	padding:0px;
+	margin:0px;
+}
+.adminBody nav.admin-main-menu ul li {
+	list-style:none;
+	padding:0px;
+	margin: 5px 0px;
+	transition:.5s;
+}
+
+.adminBody nav.admin-main-menu ul li:hover {
+	background:none;
+	box-shadow:none;
+	background-color:#E0E0E0;
+}
+
+.adminBody nav.admin-main-menu  ul li a {
+	font-size: 11px;
+	text-decoration: none;
+	color: #333333;
+	padding: 4px 24px 4px 4px;
+	display:block;
+	background-image:url(/core/images/icons/cog.png);
+	background-repeat:no-repeat;
+	background-position: right 50%;
+	text-align:right;
+}
+
+.adminBody nav.admin-main-menu  ul li#admin_link_home a,
+.adminBody nav.admin-main-menu  ul li#admin_link_dashboard a {
+	background-image:url(/core/images/icons/preferences-system.png)
+}
+.adminBody nav.admin-main-menu ul #admin_link_site a {
+	background-image: url(/core/images/icons/grn_arrw_rt.png);
+}
+.adminBody nav.admin-main-menu ul #admin_link_homepage a {
+	background-image: url(/core/images/icons/house.png);
+}
+.adminBody nav.admin-main-menu ul #admin_link_news a {
+	background-image: url(/core/images/icons/newspaper.png);
+}
+.adminBody nav.admin-main-menu ul #admin_link_calendar a {
+	background-image: url(/core/images/icons/date.png);
+}
+.adminBody nav.admin-main-menu ul #admin_link_booking a {
+	background-image: url(/core/images/icons/office-calendar.png);
+}
+.adminBody nav.admin-main-menu ul #admin_link_articles a {
+	background-image: url(/core/images/icons/book_edit.png);
+}
+.adminBody nav.admin-main-menu ul #admin_link_video a {
+	background-image: url(/core/images/icons/applications-multimedia.png);
+}
+.adminBody nav.admin-main-menu ul #admin_link_links a {
+	background-image: url(/core/images/icons/link.png);
+}
+.adminBody nav.admin-main-menu ul #admin_link_directory a {
+	background-image: url(/core/images/icons/book_open.png);
+}
+.adminBody nav.admin-main-menu ul #admin_link_forum a {
+	background-image: url(/core/images/icons/comments.png);
+}
+.adminBody nav.admin-main-menu ul #admin_link_locations a {
+	background-image: url(/location/images/icons/flag_16.png);
+}
+.adminBody nav.admin-main-menu ul #admin_link_documents a {
+	background-image: url(/core/images/icons/edit-copy.png);
+}
+.adminBody nav.admin-main-menu ul #admin_link_users a {
+	background-image: url(/core/images/icons/group.png);
+}
+.adminBody nav.admin-main-menu ul #admin_link_surveys a {
+	background-image: url(/core/images/icons/emoticon_smile.png);
+}
+.adminBody nav.admin-main-menu ul #admin_link_blogs a {
+	background-image: url(/core/images/icons/comment_edit.png);
+}
+.adminBody nav.admin-main-menu ul #admin_link_jobs a {
+	background-image: url(/core/images/icons/thumb_up.png);
+}
+.adminBody nav.admin-main-menu ul #admin_link_regions a {
+	background-image: url(/core/images/icons/world_edit.png);
+}
+.adminBody nav.admin-main-menu ul #admin_link_groupemail a,
+.adminBody nav.admin-main-menu ul #admin_link_email a ,
+.adminBody nav.admin-main-menu ul #admin_link_mail a {
+	background-image: url(/core/images/icons/mail-reply-all.png);
+}
+.adminBody nav.admin-main-menu ul #admin_link_shop a {
+	background-image: url(/core/images/icons/cart.png);
+}
+.adminBody nav.admin-main-menu ul #admin_link_visitors a {
+	background-image: url(/core/images/icons/chart_pie.png);
+}
+.adminBody nav.admin-main-menu ul #admin_link_help a {
+	background-image: url(/core/images/icons/help.png);
+}
+.adminBody nav.admin-main-menu ul #admin_link_logout a {
+	background-image: url(/core/images/icons/logout.png);
+}
+
+.adminBody nav.admin-main-menu ul #admin_link_gallery a ,
+.adminBody nav.admin-main-menu ul #admin_link_photos a{
+	background-image: url(/core/images/icons/image-x-generic.png);
+}
+.adminBody nav.admin-main-menu ul #admin_link_furniture a {
+	background-image: url(/core/images/icons/picture-frame.png);
+}
+.adminBody nav.admin-main-menu ul #admin_link_reminders a {
+	background-image: url(/core/images/icons/appointment-new.png);
+}
+.adminBody nav.admin-main-menu ul #admin_link_database a {
+	background-image: url(/core/images/icons/system-file-manager.png);
+}
+
+
+

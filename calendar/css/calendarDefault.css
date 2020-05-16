@@ -1,0 +1,432 @@
+@charset "UTF-8";
+/* CSS Document */
+
+
+h1.calheader {
+	background-image: url(/calendar/images/office-calendar.png);
+	background-repeat: no-repeat;
+	
+	padding-left:38px;
+	background-position: 0px center;
+}
+
+/*************** BASIC CALENDAR *************/
+
+table.calendar {
+	border-collapse:separate;
+	border-spacing: 2px;
+	width:100%;
+}
+
+table.calendar a {
+	display: table-cell;
+	color: #000066;
+	text-decoration: none;
+	
+}
+
+table.calendar thead {
+	background-color:rgb(0,0,0);
+}
+
+table.calendar td, 
+table.calendar th {
+	padding:0;
+	margin: 2px;
+	
+	
+	vertical-align:top;
+	text-align: right;
+	-webkit-border-radius: 3px;
+-moz-border-radius: 3px;
+border-radius: 3px;
+	
+}
+
+
+
+table.calendar td, 
+table.calendar th {
+	width:14.286%;
+	height:auto;
+	
+	position:relative;
+}
+table.calendar td {
+	padding-top:14.286%;
+}
+
+table.calendar td a, 
+table.calendar th a {
+	position:absolute;
+	width:100%;
+	height:100%; top:0;
+	left:0;
+}
+
+
+table.calendar th
+{
+	text-align: center;
+	vertical-align: middle;
+	width: auto;
+	background-color:#666;
+	color:#FFF;
+	font-weight:bold;
+	font-size:1.2em;
+	border: 1px solid #666;	
+ outline: 2px solid #999;
+	-webkit-border-radius: 0;
+-moz-border-radius: 0;
+border-radius: 0;
+}
+
+table.calendar th a:link,
+table.calendar th a:visited {
+	color:#FFF;
+	vertical-align:middle;
+}
+table.calendar th.monthname {
+	width:auto;
+	font-size:2em;
+}
+
+table.calendar td {
+	border: 1px solid #CCC;
+	background-image: url(../images/calendar-grad.jpg);
+	background-repeat: no-repeat;
+}
+
+
+
+table.calendar a:hover {
+	background-color:#CCC;
+	
+}
+
+
+table.calendar a.events {
+	background-color: #FF9999;
+}
+table.calendar a.events:hover {
+	background-color: #FF3300;
+}
+
+
+td.calendarToday {
+	outline: 2px solid #990000;
+}
+
+td a .calendarDate {
+	display:block;
+	padding: .5em;
+}
+
+td a .calendarEvents {
+	display:none;
+}
+
+/*********** MAIN PAGE *************/
+
+#monthCalendarContainer {
+	float:right;
+	margin: 2em 0 0 1em;
+	
+}
+
+.eventList .eventdate,
+.eventList .eventtitle {
+	display:block;
+	font-weight:bold;
+}
+
+.eventList .eventtime,
+.eventList .eventlocation,
+.eventList .eventcategory,
+.eventList .eventduration{
+	display:block;
+	color:#999;
+}
+
+.eventList .eventdate,
+.eventList .eventtime {
+	display:inline-block;
+}
+
+/*new list version */
+
+.eventList ul {
+	list-style:none;
+	padding:0;
+	margin:0;
+	
+}
+
+.eventList ul li {
+	list-style:none;
+	padding:0;
+	margin:0 0 20px 0;
+	
+}
+
+/*************REGISTRATION **********/
+
+#registrationPage table.main-registrant tr > th:first-child,
+#registrationPage table.main-registrant tr > td:first-child {
+	width:40%;
+	padding-right: 5px;
+}
+
+#registrationPage table.team-registration th,
+#registrationPage table.team-registration td {
+	padding: 0 5px 5px 0;
+}
+
+
+
+/********** ADMIN VERSION ***************/
+
+#link_addmore, #extrarows {
+	display:none;
+}
+
+
+
+#pageDiaryManager #monthCalendarContainer {
+	float:right;
+	margin-left:5px;
+	width:320px;
+}
+
+ #pageDiaryManager table.calendar td {
+	height: 40px;
+	width:40px;
+	border: 1px solid #CCCCCC;
+	text-align: right;
+}
+#pageDiaryManager td.calendarToday {
+	border: 2px solid #990000;
+}
+#pageDiaryManager td.calendarHeader {
+	text-align: center;
+	vertical-align: middle;
+}
+#pageDiaryManager table.calendar a {
+display: block;
+height: 40px;
+width: 40px;
+}
+
+
+
+#pageDiaryManager table.calendar a:link, #pageDiaryManager table.calendar a:visited {
+	text-decoration: none;
+	border: none;
+	color: #000066;
+}
+#pageDiaryManager table.calendar a:hover, #pageDiaryManager table.calendar a:focus {
+	text-decoration: none;
+	border: none;
+	color: #000066;
+}
+#pageDiaryManager table.calendar a.notbooked:link, #pageDiaryManager table.calendar a.notbooked:visited {
+	background-color: #CCFFCC;
+}
+#pageDiaryManager table.calendar a.notbooked:focus, #pageDiaryManager table.calendar a.notbooked:hover {
+	background-color: #99FF99;
+}
+#pageDiaryManager table.calendar a.partbooked:link, #pageDiaryManager table.calendar a.partbooked:visited {
+	background-color: #FFCC66;
+}
+#pageDiaryManager table.calendar a.partbooked:focus, #pageDiaryManager table.calendar a.partbooked:hover {
+	background-color: #FF9966;
+}
+#pageDiaryManager table.calendar a.booked:link, #pageDiaryManager table.calendar a.booked:visited {
+	background-color: #FF9999;
+}
+#pageDiaryManager table.calendar a.booked:focus, #pageDiaryManager table.calendar a.booked:hover {
+	background-color: #FF3300;
+}
+
+
+/*** DAY DIARY ***/
+
+
+.diary {
+	border-collapse:collapse;
+	box-sizing:border-box;
+	width:100%;
+}
+
+.diary .resource-row {
+	margin: 0 -15px;
+}
+
+.diary .resource-column {
+	padding: 0 15px;
+}
+
+@media (min-width: 992px) {
+.diary .resource-column {
+	width:33.3333%;	/*<?php echo floor(100/$totalRows_rsResource) ?>*/
+	float:left;
+}
+}
+
+.diary .diary-time-list  .event-resource-name {
+	display:none;
+}
+
+.diary .diary-time-list  .period {
+	border-top: 1px solid rgb(204,204,204);
+	position:relative;
+	
+}
+
+.diary .diary-time-list .period.nextavailable .time {
+	color:red;
+}
+
+.diary .diary-time-list  .period.minutes00 {
+	border-top: 2px solid rgb(204,204,204);
+	
+}
+
+.diary .diary-time-list  .period a.event {
+	display:block;
+	color:inherit;
+	text-decoration:none;
+	position:absolute;
+	padding: 0 20px 0 5px;
+	margin-left:4em; /* to left of time */
+	left:0;
+	right:0; /* variable left:x and right:0 values make box use full width */
+	top:-1px;
+	border:1px solid rgb(153,153,153);
+	background-color:rgb(235,235,235);
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	cursor:pointer;
+	overflow:hidden;
+	transition:.5s;
+}
+
+
+.diary .diary-time-list  .period a.event .eventdetails {
+	display:none;
+}
+@media print {
+	.diary .diary-time-list  .period a.event .eventdetails {
+	display:block;
+}
+}
+
+
+
+.diary .diary-time-list .period .event:hover {
+	z-index:10000 !important;
+	box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+
+	
+}
+
+.diary .diary-time-list  .period .event:hover .eventdetails {
+	display:block;
+}
+
+
+
+
+
+.diary .diary-time-list  .period .event .reminder {
+	display:block;
+	width:16px;
+	height:16px;
+	background:url(/calendar/images/bell.png) no-repeat center center;
+	position:absolute;
+	top:0;
+	right:0;
+	text-indent:-999em;
+}
+
+.diary .diary-time-list  .period .event .reminder.sent {
+	background-image:url(/calendar/images/bell-tick.png);
+}
+
+/**** RESOURCE GRID ****/
+.ajaxUpdateEventPage td, #addevent td {
+	padding:3px;
+}
+
+/**** RESOURCE GRID ****/
+
+.fb-event-resource-grid-wrapper {
+	max-width:100%;
+	overflow-x:scroll;
+}
+
+.fb-event-resource-grid-wrapper * {
+	box-sizing:border-box;
+}
+
+.fb-event-resource-grid  {
+	display:table;
+	border-collapse:collapse;
+	table-layout:fixed;
+}
+
+
+
+.fb-event-resource-grid  .diary-time-list {
+	display:table-row;	
+}
+
+.fb-event-resource-grid  .diary-time-list > div {
+	display:table-cell;
+	position:relative;
+	padding:5px;	
+	border-right:1px solid rgb(204,204,204);
+	border-bottom:1px solid rgb(204,204,204);
+	height:4.5em;	
+}
+.fb-event-resource-grid  .diary-time-list:first-child > div {
+	height:auto;
+}
+
+
+.fb-event-resource-grid  .diary-time-list > div:hover {
+	overflow:visible;
+}
+
+.fb-event-resource-grid .diary-time-list .period a {
+	position:absolute;
+	left:0;
+	padding:3px;
+	display:block;
+	height:4.5em !important;
+	max-height:4.5em;	
+	overflow:hidden;
+	border-radius:3px;
+}
+
+.fb-event-resource-grid .diary-time-list .period a .categoryname,
+.fb-event-resource-grid .diary-time-list .period a .resourcename {
+	display:none;
+}
+
+.fb-event-resource-grid  .diary-time-list .period a:hover {
+	overflow:visible;
+	min-height:4.5em !important;
+	height:auto !important;
+	max-height:999em;
+}
+
+.fb-event-resource-grid .diary-time-list .period .time {
+	display:none;
+}
+
+.fb-event-resource-grid .diary-time-list.resource-1 .period .time {
+	display:inline-block;
+	
+}

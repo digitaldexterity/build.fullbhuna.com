@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+#googlemap {
+	height: 300px;
+}
+
+h1.locationheader {
+	background-image: url(../images/icons/flag_32.png);
+	background-repeat: no-repeat;
+
+	padding-left:38px;
+	background-position: 0px center;	
+}

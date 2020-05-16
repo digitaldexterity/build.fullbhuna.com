@@ -1,0 +1,1 @@
+﻿<?xml version="1.0" encoding="utf-8" ?><info>	<infoitem key="UD_rsCategories" value="name:ID;datatype:int,name:categoryname;datatype:string" />	<infoitem key="UD_rsCommType" value="name:ID;datatype:int,name:typename;datatype:string" /></info>

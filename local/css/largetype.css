@@ -1,0 +1,10 @@
+@import url("/local/css/layout.css");
+@import url("/local/css/styles.css");
+
+body, td, th, select, input, textarea , header{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:22px;
+	
+	
+}
+

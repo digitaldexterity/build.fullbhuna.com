@@ -1,0 +1,96 @@
+body
+{
+    /*
+	color:#000000;
+    background-color:#f0f0f0;
+    font-size: 80%;
+    margin-top:10px;
+    margin-left:10px;
+    margin-right:10px;
+    margin-bottom:10px;
+	*/
+}
+
+
+#tooltip
+{
+    background-color: yellow;
+    marginleft:0;
+    border: 3px solid black;
+    padding: 3px;
+    visibility:hidden;
+    position:absolute;
+    width:250px;
+    z-index:100;
+    overflow:hidden;
+    filter: progid:DXImageTransform.Microsoft.Shadow(color=gray,direction=125);
+}
+
+table
+{
+    background: #e0e0e0;
+    padding: 5px;
+}
+
+table.tab_names
+{
+    padding: 10px;
+    border-collapse: collapse ;
+    border-width: 3px;
+    border-spacing: 1px;
+    border-style: solid;
+    border-color: #808080;
+    background-color: #f0f0f0;
+}
+
+table.tab_names td
+{
+    border-width: 1px;
+    border-spacing: 1px;
+    border-style: solid;
+    border-color: #808080;
+}
+
+td.selected_tab
+{
+    background-color: #ffffff;
+}
+
+table.tab_header
+{
+    background: #e8e8e8;
+}
+
+select
+{
+    z-index:10;
+}
+option
+{
+    z-index:10;
+}
+
+a.tab:link { color: #0000c0 }
+a.tab:visited { color: #0000c0 }
+a.tab:active { color: #0000c0 }
+a.tab:hover { color: #000000}
+
+.links
+{
+    background: #fff0f0;
+    color: #404000;
+}
+.links_para
+{
+    border: medium dashed #ff0000;
+    background: #fff0f0;
+    color: #404000;
+    margin: 25px;
+    padding: 25px 25px 25px 25px;
+    font-size: 20px;
+    text-align: center;
+}
+a.links:link { color: #0000c0 }
+a.links:visited { color: #0000c0 }
+a.links:active { color: #0000c0 }
+a.links:hover { color: #0000c0; font-weight: bold; }

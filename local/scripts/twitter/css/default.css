@@ -1,0 +1,12 @@
+ul.tweet_list {
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+
+ul.tweet_list li{
+		list-style:none;
+	padding: 0 0 0 40px;
+	background:url(/local/scripts/twitter/images/twitter-logo-50px-blue.png) no-repeat left top;
+	margin: 0 0 10px 0;
+}

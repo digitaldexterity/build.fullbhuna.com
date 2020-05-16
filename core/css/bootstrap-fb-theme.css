@@ -1,0 +1,12 @@
+a {
+	color: #337ab7;
+}
+
+.btn.btn-default, .btn.btn-secondary  {
+	background:#ffffff;
+	color:#545b62;
+}
+
+.navbar .container-fluid {
+	padding:0; 
+}

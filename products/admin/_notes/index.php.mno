@@ -1,0 +1,1 @@
+﻿<?xml version="1.0" encoding="utf-8" ?><info>	<infoitem key="UD_rsSupplier" value="name:ID;datatype:int,name:name;datatype:string" />	<infoitem key="UD_rsPromotions" value="name:ID;datatype:int,name:promotitle;datatype:string,name:promocode;datatype:string" /></info>

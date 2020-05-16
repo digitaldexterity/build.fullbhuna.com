@@ -1,0 +1,97 @@
+<?php
+header('Content-Type: text/xml');
+header('Content-Disposition: inline; filename=config.xml');
+echo '<?xml version="1.0"  encoding="UTF-8" ?>';
+?>
+<config>
+   <showMainBar>true</showMainBar>
+   <skin>Default</skin>
+   <mainbarAutoHide>true</mainbarAutoHide>
+   <mainbar_Alpha>100</mainbar_Alpha>
+   <mainbar_Top>#91b4ae</mainbar_Top>
+   <mainbar_Bottom>#91b4ae</mainbar_Bottom>
+   <mainbar_Detach>false</mainbar_Detach>
+   <mainbar_TopPadding>20</mainbar_TopPadding>
+   <loadSkin>false</loadSkin>
+   <fixedWidth>480</fixedWidth>
+   <fixedHeight>272</fixedHeight>
+   <videoProportions>true</videoProportions>
+   <autoSize>true</autoSize>
+   <roundedCorners>false</roundedCorners>
+   <roundedCornersRadius>10</roundedCornersRadius>
+   <videoBackground>false</videoBackground>
+   <videoBackgroundColor>#000000</videoBackgroundColor>
+   <autoPlay>false</autoPlay>
+   <autoPlayPlayList>false</autoPlayPlayList>
+   <loop>false</loop>
+   <videoDeblocking>0</videoDeblocking>
+   <dualThresholdBuffering>true</dualThresholdBuffering>
+   <bufferTime>3</bufferTime>
+   <playerFilesPath>/video/player/</playerFilesPath>
+   <skinFolderPath>/video/player/skin/</skinFolderPath>
+   <configXMLPath>/video/player/config.xml.php</configXMLPath>
+   <playListXML_Path>/video/player/playList.xml.php</playListXML_Path>
+   <buttonsColor>#FFFFFF</buttonsColor>
+   <volumeAudio>60</volumeAudio>
+   <seekBar_color>#91b4ae</seekBar_color>
+   <showBigPlayButton>true</showBigPlayButton>
+   <buttonToolTips>false</buttonToolTips>
+   <showNowPlaying>false</showNowPlaying>
+   <textColor>#FFFFFF</textColor>
+   <textBGColor>#000000</textBGColor>
+   <fontFamily>Default Embedded Font</fontFamily>
+   <fontSize>8</fontSize>
+   <emailSubjectTitle></emailSubjectTitle>
+   <emailBodyText></emailBodyText>
+   <buttonToolTipsList>stop,play,pause,played time / all time,sound volume,playlist,html code and link,send to friend,video properties,fullscreen/new window mode</buttonToolTipsList>
+   <showEmailButton>false</showEmailButton>
+   <showEmbedButton>false</showEmbedButton>
+   <showFullscreenButton>true</showFullscreenButton>
+   <showNewWindowButton>false</showNewWindowButton>
+   <showPlayListButton>false</showPlayListButton>
+   <showTimerButton>false</showTimerButton>
+   <showVideoPropButton>false</showVideoPropButton>
+   <showVolumeButton>true</showVolumeButton>
+   <smallthumbWidth>60</smallthumbWidth>
+   <smallthumbHeight>35</smallthumbHeight>
+   <thumbnailCarousel>false</thumbnailCarousel>
+   <thumbnailCarouselOnPlay>false</thumbnailCarouselOnPlay>
+   <addexterpl>None</addexterpl>
+   <plbgwmode>false</plbgwmode>
+   <plbgcolor>#000000</plbgcolor>
+   <plwidth>480</plwidth>
+   <plheight>272</plheight>
+   <subtitleFontAlign>Center</subtitleFontAlign>
+   <subtitleFontFamily>Arial</subtitleFontFamily>
+   <subtitleFontBold>false</subtitleFontBold>
+   <subtitleFontColor>#FFFFFF</subtitleFontColor>
+   <subtitleFontItalic>false</subtitleFontItalic>
+   <subtitleFontSize>20</subtitleFontSize>
+   <showSubtitleFontBG>true</showSubtitleFontBG>
+   <subtitleFontBGColor>#000000</subtitleFontBGColor>
+   <GoogleAnalytics>false</GoogleAnalytics>
+   <GAasynchronousTrackingCode>true</GAasynchronousTrackingCode>
+   <GAplayerLoaded>true</GAplayerLoaded>
+   <GApreRollAdLoaded>true</GApreRollAdLoaded>
+   <GAvideoPlay>true</GAvideoPlay>
+   <GAvideoPause>true</GAvideoPause>
+   <GAmostViewedVideos>true</GAmostViewedVideos>
+   <GAvideoStop>true</GAvideoStop>
+   <sharingButtons>false</sharingButtons>
+   <enableFlashEvent>true</enableFlashEvent>
+   <htmlButtons>false</htmlButtons>
+   <wowzaSecureToken>false</wowzaSecureToken>
+   <smallthumbCateg></smallthumbCateg>
+   <ownerLogoIMGPath></ownerLogoIMGPath>
+   <ownerLogoAlpha></ownerLogoAlpha>
+   <ownerLogoLink></ownerLogoLink>
+   <ownerLogoLinkTarget>_blank</ownerLogoLinkTarget>
+   <ownerLogoAlign></ownerLogoAlign>
+   <rightClickMenuCopyright></rightClickMenuCopyright>
+   <rightClickMenuCopyrightLink></rightClickMenuCopyrightLink>
+   <rightClickMenuCopyrightTarget>_blank</rightClickMenuCopyrightTarget>
+   <rightClickMenuPLCopyright></rightClickMenuPLCopyright>
+   <rightClickMenuPLCopyrightLink></rightClickMenuPLCopyrightLink>
+   <rightClickMenuPLCopyrightTarget></rightClickMenuPLCopyrightTarget>
+   <objectID>FBplayer</objectID>
+</config>

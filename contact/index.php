@@ -1,0 +1,1 @@
+<?php header("location: /mail/contact.php"); exit; ?>

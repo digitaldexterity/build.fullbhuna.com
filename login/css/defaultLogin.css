@@ -1,0 +1,60 @@
+@charset "UTF-8";
+/* CSS Document */
+
+
+
+#loginBox {
+	border: 1px solid #CCCCCC;	
+	padding: 15px;	
+	min-height: 350px;
+	height:100%;
+	margin-bottom:15px;
+}
+#signUpBox {
+	border: 1px solid #CCCCCC;	
+	padding: 15px;
+	height:100%;
+	min-height: 350px;
+}
+
+.loginmessage {
+	text-align: center;
+}
+.loginmessage a:link, .loginmessage a:visited {
+	text-decoration: none;
+	border: none;
+	background: url(/core/images/processing.gif) no-repeat center bottom;
+	display:block;
+	padding: 1.5em;
+}
+
+.loginmessage a:hover, .loginmessage a:focus {
+	text-decoration: underline;
+	
+}
+
+
+
+
+
+
+a#link_forgottenpassword {
+	text-decoration:none;
+	color:#999;
+	
+}
+a#link_forgottenpassword:hover {
+	text-decoration:underline;
+}
+
+
+div.g-recaptcha {
+	/* NOT BUTTON */
+	width:100%;
+	overflow:hidden;
+	margin-bottom:15px;
+}
+
+div.g-recaptcha  > div {
+	float:right;
+}

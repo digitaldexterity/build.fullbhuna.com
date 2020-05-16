@@ -1,0 +1,7 @@
+@charset "UTF-8";
+/* CSS Document */
+#ticker { 
+padding: 5px 0;
+visibility:hidden; } 
+#ticker a { color:#333; text-decoration:none; }
+#ticker a:hover { text-decoration:underline; }

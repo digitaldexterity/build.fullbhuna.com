@@ -1,0 +1,22 @@
+form input.hp { /** HONEYPOT SPAM TRAP **/
+	display:none;
+}
+
+form#signup {
+	max-width:500px;
+	margin: 0 auto;
+}
+.jobtitle { display:none; } 
+
+
+.agerange label {
+	width: 5em;
+	display: inline-block;
+}
+
+
+.demographics {
+	background-color:#F3F3F3;
+	padding:15px;
+	margin: 0 -15px;
+}

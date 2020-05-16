@@ -1,0 +1,3 @@
+<ul><li class="mainMenu_home"><a href='/index.php' title='Click here to return to the home page'>Home</a></li>
+<li class="mainMenu_articles"><a href='/articles/index.php' title='Click to view articles'>Articles</a></li>
+<li class=\"mainMenu_logout\"><a href='/login/logout.php?fulllogout=true' title='Click here to log out fully' onclick=\"document.returnValue =  confirm('Are you sure you want to log out?\n\n(You will need to log in again next time even if you checked Remember Me)');return document.returnValue;\">Log Out</a></li>\n</ul>

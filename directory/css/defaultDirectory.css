@@ -1,0 +1,62 @@
+@charset "UTF-8";
+/* CSS Document */
+
+.adminBody h1.directoryheader {
+	background-image: url(../../core/images/icons-large/address-book-new.png);
+	background-repeat: no-repeat;
+	
+	padding-left:38px;
+	background-position: 0px center;	
+}
+
+
+#pageDirectoryIndex #directoryextras {
+	float: right;
+	width: 300px;
+	padding: 10px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 10px;
+	margin-left: 10px;
+	background-color: #EEEEEE;
+	border: 1px solid #999999;
+}
+
+#pageDirectoryIndex #googlemap {
+	height: 250px;
+	width: 300px;
+}
+
+
+
+
+
+#pageDirectoryIndex ul#directorySubCategories,  #pageDirectoryIndex ul#directoryEntries {
+	list-style:none;
+	margin:0px;
+	padding:0px;
+}
+
+#pageDirectoryIndex ul#directorySubCategories li, #pageDirectoryIndex ul#directoryEntries li {
+	
+	border: 1px solid #e9e9e9;
+	list-style:none;
+	padding: 5px;
+	width: 530px;
+	margin-top: 5px;
+	margin-right: 0px;
+	margin-bottom: 5px;
+	margin-left: 0px;
+	background-color: #FAFAFA;
+}
+
+#directoryCategories tr.mainCategory {
+	font-weight:bold;
+}
+
+.directoryareas label,
+.directorytypes label {
+	white-space:nowrap;
+	display:inline-block;
+	margin: .5em;
+}

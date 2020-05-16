@@ -1,0 +1,15 @@
+CACHE MANIFEST
+# Full Bhuna
+# version 1 (any change to this file forces reload otherwise cached files will ALWAYS be used)
+
+/3rdparty/bootstrap/css/bootstrap.css
+/help/css/help.css
+/help/scripts/helppages.js
+
+NETWORK:
+# files that shoudl not be cached
+*
+
+FALLBACK:
+# files that in first directory shodu be replaced
+/html/ /offline.html

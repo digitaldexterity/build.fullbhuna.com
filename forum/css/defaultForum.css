@@ -1,0 +1,18 @@
+@charset "UTF-8";
+.forumtopic {
+	margin-top: .5em;
+	margin-bottom: .5em;
+}
+
+.forumtopictitle {
+	font-weight:bold;
+}
+
+.forumtopictitle a {
+	display:block; /* keep multi line text left aligned */
+	text-decoration:none;
+}
+
+#forumlatest, #forumeditorpick, #forummostread {
+	text-transform:uppercase;
+}

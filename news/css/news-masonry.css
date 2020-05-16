@@ -1,0 +1,54 @@
+/*default masonry grid */
+
+.items {
+	margin: 0 -15px;
+}
+.item {
+	
+	padding:15px;
+}
+
+.item .image {
+	overflow:hidden;margin-bottom:15px;
+	
+}
+
+.item .image:before {
+	
+}
+
+.item  img {
+	width:100% ;
+	height:auto;
+	max-width:100%;
+}
+/* suggested hover effect
+
+.item  img {
+	
+	transition:1s;
+	-webkit-filter: grayscale(100%);
+filter: grayscale(100%);
+	
+}
+
+.item  img:hover {
+	transform:scale(1.1,1.1);
+	-webkit-filter: grayscale(0%);
+filter: grayscale(0%);
+}
+*/
+
+@media (min-width: 768px) {
+	.item {
+	width:50% !important;
+	float:left;
+	
+}
+
+}
+@media (min-width: 992px) {
+	.item {
+	width:25% !important;
+	}
+}

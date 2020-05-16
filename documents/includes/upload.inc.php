@@ -1,0 +1,1 @@
+<?php require_once(SITE_ROOT."core/includes/upload.inc.php"); ?>

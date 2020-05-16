@@ -1,0 +1,11 @@
+#letterbody {
+	font-family: "Times New Roman", Times, serif;
+	font-size: 12pt;
+}
+#a4page #letterbody {
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+	overflow: hidden;
+}

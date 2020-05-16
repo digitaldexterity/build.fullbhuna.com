@@ -1,0 +1,208 @@
+
+.usertype:before {
+	content:'\25CF'; 
+	 color:#66CC00;
+	 text-align:center;
+}
+.usertypeID0 {
+	color:#FFCC66;
+}
+.usertypeID-1,
+.usertypeID-2
+{
+	 color:#CC0000;
+
+}
+
+
+
+
+
+ul#userconnections {
+	list-style:none;
+	margin:0;
+	padding:0;
+	width:100%;
+	overflow:hidden;
+}
+
+ul#userconnections li {
+	list-style:none;
+	display:block;
+	margin:0 1em 0 0;
+	padding:0;
+	width: 75px;
+	float:left;
+}
+
+ul#userconnections li a {
+	text-decoration:none;
+	display:block;
+	float:left;
+}
+
+ul#userconnections li a:hover {
+	text-decoration:underline;
+}
+
+
+/* User Groups */
+table.user-groups .optin1 {
+	background-image:url(../../core/images/icons/mail-reply-all.png);
+	background-repeat:no-repeat;
+	background-position: 50% 50%;
+	width: 20px;
+}
+
+#profileheader {
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #999;
+	width:100%;
+	overflow:hidden;
+	padding: 0 0 1em 0;
+	
+}
+
+#profileimage {
+	float:left;
+}
+
+#optingroups label {
+	white-space:nowrap;
+	display:inline-block;
+	margin: .5em;
+}
+
+
+#profiletext {
+	margin: 0 0 0 180px;
+}
+
+#pageMemberDirectory a.link_email,
+#pageMemberDirectory a.link_view {
+	visibility:hidden;
+}
+
+#pageMemberDirectory .listTable tr:hover td a.link_email,
+#pageMemberDirectory .listTable tr:hover td a.link_view {
+		visibility:visible;
+
+}
+ul.memberbuttons {
+	list-style:none;
+	margin:0;
+	padding:0;
+	width:100%;
+	overflow:hidden;
+	display:flex;
+	flex-wrap: wrap;
+}
+
+ul.memberbuttons li {
+	list-style:none;
+	margin:0;
+	padding:0;
+	float:left;
+}
+
+ul.memberbuttons a {
+	display:block;
+	float:left;
+	width:130px;	
+	margin:10px;
+	text-align:center;	
+	padding: 130px 10px 10px 10px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-o-border-radius: 5px;
+	border-radius: 5px 5px 5px 5px;
+	background-repeat: no-repeat;
+	background-position: 50% 10px;
+	text-decoration:none;
+	transition:.5s;
+}
+
+ul.memberbuttons a:hover {
+	background-color:#CCC;
+	color:#FFF;
+}
+
+.memberbuttons a.profile {
+		background-image: url(/members/images/Buddy.png);
+
+}
+
+.memberbuttons a.forum {
+	background-image: url(/members/images/Chat%202.png);
+}
+
+.memberbuttons a.admin {
+	background-image: url(/members/images/Settings.png);
+}
+
+.memberbuttons a.documents {
+	background-image: url(/members/images/Document%20Edit.png);
+}
+
+.memberbuttons a.database {
+	background-image: url(/members/images/Folders.png);
+}
+
+.memberbuttons a.microsite {
+	background-image: url(/members/images/Home.png);
+}
+
+.memberbuttons a.surveys {
+	background-image: url(/members/images/Chart%20Pie.png);
+}
+
+.memberbuttons a.logout,
+.memberbuttons a.login {
+	background-image: url(/members/images/Lock.png);
+}
+
+.memberbuttons a.info {
+	background-image: url(/members/images/Help.png);
+}
+.memberbuttons a.calendar {
+	background-image: url(/members/images/Calendar.png);
+}
+.memberbuttons a.tutor {
+	background-image: url(/members/images/Buddy-no-tie.png);
+}
+
+.memberbuttons a.search {
+	background-image: url(/members/images/search.png);}
+	
+	
+.memberbuttons a.news {
+	background-image: url(../images/RSS%202.png);
+}
+
+.memberbuttons a.mail {
+	background-image: url(../images/Mail.png);
+}
+
+.memberbuttons a.group {
+	background-image: url(../images/Buddy%20Group.png);
+}
+
+/** PROFILE PAGE **/
+
+.verified1 {
+	display:inline-block;
+	background-image:url(../../core/images/icons/tick-green.png);
+	background-repeat: no-repeat;
+	background-position: center center;
+	
+	width:30px;
+}
+
+
+#pageUpdateProfile .networking,
+#pageUpdateProfile .dob {
+	/* hide little usedfields by default */
+	position:absolute;
+	left:-999em;
+}

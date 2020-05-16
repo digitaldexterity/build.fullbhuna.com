@@ -1,0 +1,49 @@
+
+
+#articlesectionmenu h3 {
+	display:none;
+}
+
+
+
+.adminBody .TabbedPanelsContent.editor {
+	padding:0;
+	margin: -1px;
+}
+
+
+
+
+.adminBody .sectionname {
+	float: left;
+	width: 300px;
+	text-align:right;
+	margin-right:10px;
+}
+.adminBody .articlenames {
+	float: left;
+}
+.adminBody .articlenames ul {
+	margin: 0px;
+	padding: 0px;
+	list-style-type: none;
+}
+.adminBody .articlenames ul li {
+	margin: 0px;
+	padding: 0px;
+	list-style-type: none;
+}
+.adminBody .wrapper {
+	padding: 5px;
+}
+
+.adminBody .access {
+	background-image:url(../../core/images/icons/group.png);
+	background-repeat:no-repeat;
+	background-position: 0 50%;
+	width: 20px;
+}
+
+.adminBody .access.level0 {
+	background-image:none;
+}

@@ -1,0 +1,1 @@
+﻿<?xml version="1.0" encoding="utf-8" ?><info>	<infoitem key="UD_rsFinishes" value="name:ID;datatype:int,name:finishname;datatype:string" />	<infoitem key="UD_rsVersions" value="name:ID;datatype:int,name:versionname;datatype:string" /></info>

@@ -1,0 +1,23 @@
+@charset "UTF-8";
+/* CSS Document */
+
+h1.mailheader {
+	background-image: url(../images/mail-reply-all.png);
+	background-repeat: no-repeat;
+	padding-left:38px;
+	background-position: 0px center;	
+}
+
+tr.incoming0  td.incomingicon {
+	background-image:url(../../core/images/icons/go-previous.png);
+	background-repeat:no-repeat;
+	background-position: 50% 50%;
+	width: 20px;
+}
+
+tr.incoming1 td.incomingicon {
+	background-image:url(../../core/images/icons/go-next.png);
+	background-repeat:no-repeat;
+	background-position: 50% 50%;
+	width: 20px;
+}

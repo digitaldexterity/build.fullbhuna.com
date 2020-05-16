@@ -1,0 +1,1119 @@
+<?php /*** Functions included:
+get_web_page();
+
+*/
+
+if(!function_exists("get_web_page")) {
+
+function get_web_page( $url )
+    {
+        $user_agent='Mozilla/5.0 (Windows NT 6.1; rv:8.0) Gecko/20100101 Firefox/8.0';
+
+        $options = array(
+
+            CURLOPT_CUSTOMREQUEST  =>"GET",        //set request type post or get
+            CURLOPT_POST           =>false,        //set to GET
+            CURLOPT_USERAGENT      => $user_agent, //set user agent
+            CURLOPT_COOKIEFILE     =>"cookie.txt", //set cookie file
+            CURLOPT_COOKIEJAR      =>"cookie.txt", //set cookie jar
+            CURLOPT_RETURNTRANSFER => true,     // return web page
+            CURLOPT_HEADER         => false,    // don't return headers
+            CURLOPT_FOLLOWLOCATION => true,     // follow redirects
+            CURLOPT_ENCODING       => "",       // handle all encodings
+            CURLOPT_AUTOREFERER    => true,     // set referer on redirect
+            CURLOPT_CONNECTTIMEOUT => 120,      // timeout on connect
+            CURLOPT_TIMEOUT        => 120,      // timeout on response
+            CURLOPT_MAXREDIRS      => 10,       // stop after 10 redirects
+        );
+
+        $ch      = curl_init( $url );
+        curl_setopt_array( $ch, $options );
+        $content = curl_exec( $ch );
+        $err     = curl_errno( $ch );
+        $errmsg  = curl_error( $ch );
+        $header  = curl_getinfo( $ch );
+        curl_close( $ch );
+
+        //$header['errno']   = $err;
+        //$header['errmsg']  = $errmsg;
+        //$header['content'] = $content;
+        return $content;
+    }
+}
+
+if(!function_exists("curl_get_contents")) {
+function curl_get_contents($url)
+{
+	
+	if (function_exists('curl_version'))
+{
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+    $data = curl_exec($curl);
+    curl_close($curl);
+}
+else if (file_get_contents(__FILE__) && ini_get('allow_url_fopen'))
+{
+    $data = file_get_contents($file);
+}
+else
+{
+    die( 'You have neither cUrl installed nor allow_url_fopen activated. Please setup one of those!');
+}
+
+
+
+   
+
+    return $data;
+}
+}
+
+
+
+if(!function_exists("exportCSV")) {
+function exportCSV($headers, $recordset, $filename="Export-YY-MM-DD", $delimiter=",",$excelcompat=true,$addquotes=true,$linefeed="\r\n") {
+	// headers is array of headers with format informtion separated by bar
+	// e.g. "name","price|currency","address|hide" - NO NAMES TO BE BLANK!
+	// make sure there are no leading spaces before commas to avoid Excel bug
+	// YY-MM-DD will be replaced by actual day
+	
+	global $database_aquiescedb, $aquiescedb;
+	mysql_select_db($database_aquiescedb, $aquiescedb);
+	csvHeaders($filename,$delimiter);
+	
+	if(is_resource($recordset) && mysql_num_rows($recordset)>0) { // is data
+		$headerformats = array();
+		mysql_data_seek($recordset,0);
+		if(is_array($headers)) { // is headers
+			$col = 0;
+			while($header = array_shift($headers)) { // loop
+				$format = explode("|",$header);
+				$format[1] = isset($format[1]) ? $format[1] : "";
+				array_push($headerformats,$format[1]);				
+				if($format[1]!="hide") {
+					print ($col > 0 ? $delimiter : ""); 
+					print (formatCSV($format[0],"text",$delimiter,$excelcompat,$addquotes)); $col++; 
+				} // not hide
+			} // end loop
+			print ($linefeed);
+		} // end is headers
+
+		while($row = mysql_fetch_assoc($recordset)) {
+			$item=0; $col = 0; 
+			foreach($row as $key => $value) {
+				if(@$headerformats[$col] !="hide") {					
+						print (($item > 0) ? $delimiter : ""); $item++;				
+						print (formatCSV($value,@$headerformats[$col],$delimiter,$excelcompat,$addquotes));						
+					}
+				$col ++;
+				} // end foreach
+			print ($linefeed);
+		}
+		die();
+	} // end is data	
+} // end func
+}
+
+
+
+
+
+
+if(!function_exists("formatCSV")) {
+function formatCSV($item,$format="",$delimiter=",",$excelcompat=true,$addquotes=true) { // clean input for CSV
+$isNumber = is_numeric($item);
+	$protocol = (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == "on") ? "https://" : "http://" ;
+	if(substr($format,0,5) == "array") {
+		$values = explode(":",$format);
+		$item = isset($values[intval($item)+1]) ? $values[intval($item)+1] : $item;
+	} else {
+		switch($format) {
+			case "currency" : $item = ($item>0) ? number_format($item,2,".","") : ""; $isNumber = true; break; 
+			//preserve leading and trailing zeros - Excel specif - remove if just CSV required
+			case "date" : $item = (strlen($item)>1 && $item > 0) ? date('d M Y', strtotime($item)) : ""; $isNumber = true; break;
+			case "boolean" : $item = ($item == 1) ? "Yes" : "No"; break;
+			case "capitalise" : $item = strtoupper($item); break;
+			case "number" : $item = $item; $isNumber = true; break;
+            case "striptags" : $item = trim( preg_replace( '/\s+/', ' ',html_entity_decode(strip_tags($item))));  break;
+			case "siteimage" : $item = ($item !="") ? $protocol.$_SERVER['HTTP_HOST']."/Uploads/".$item : ""; break;
+			case "siteurl" : $item = ($item !="") ? $protocol.$_SERVER['HTTP_HOST']."/".$item : ""; break;
+			case "exact" :  break;
+			default : $item = preg_replace('/[^\p{Latin}\d\s\p{P}]/u', '', $item);
+		}
+	}
+	
+	$quotes = $addquotes ? "\"" : "";
+	$item = ($delimiter==",") ? $quotes.str_replace("\"","\"\"",$item).$quotes : $item; // add quoted for csv
+	$item = ($delimiter=="\t") ? str_replace("\t","",$item) : $item; // remove tabs from tab delimted
+	$item = ($excelcompat && $isNumber) ? "=".$item : $item; // add equals for excel
+	$item = ($item == '=""' ||  $item =='=') ? "" : $item; // if blank just return nothing (campability requested by Cycling Scotland)
+
+return $item;
+}
+}
+
+
+
+
+
+if(!function_exists("csvHeaders")) {
+function csvHeaders($filename="Export", $delimiter=",") {
+	$filename = str_replace("YY",date('y'),$filename);
+	$filename = str_replace("MM",date('m'),$filename);
+	$filename = str_replace("DD",date('d'),$filename);
+	$filename .= ($delimiter==",") ? ".csv" : ".txt";
+	$filename = preg_replace("/[^\w\.-]/", "-", strtolower($filename)); // clean
+	header ("Content-disposition: attachment; filename=".$filename); 
+	header ("Content-type: application/octet-stream");
+	header("Pragma: no-cache"); 
+	header("Expires: 0"); 
+}
+}
+
+
+
+
+
+if(!function_exists("removeQueryVarFromURL")) {
+function removeQueryVarFromURL($url,$varname) { 
+	return preg_replace('/([?&])'.$varname.'=[^&]+(&|$)/','$1',$url);
+}
+}
+
+
+if(!function_exists("encodeSafeEmails")) {
+function encodeSafeEmails($text, $articleID=0) {
+	// replaces plain text emails with safe versions in html
+	
+	// first remove any existing mailto: links
+	if(preg_match_all('/<a(.*?)mailto:(.*?)a>/', $text, $emaillinks)) { 
+		foreach ($emaillinks[0] as $email) {
+			$email = getTextBetweenTags($email, "a");
+			if(strpos($email,"@")!==false) { // is an email address within link
+				$text = str_replace($emaillinks[0], $email, $text);
+			}
+			
+		}
+		
+	}
+	
+      
+    if (preg_match_all('/\w*(?<!mailto:)[a-z\d._%+-]+@[a-z\d.-]+\.[a-z]{2,4}\b/i', $text, $emails)) {
+		// ignore mailto emails
+	// articleID and key make each unique even on parallax
+
+            foreach ($emails[0] as $key => $email) {
+				$emailparts = explode("@", $email);
+				$newemail = "<!--fb start email-->
+				<noscript>".$emailparts[0]." at ".$emailparts[1]."</noscript><span id=\"safeemail".$articleID."-".$key."\"></span>
+				<script type=\"text/javascript\">
+				
+				document.getElementById(\"safeemail".$articleID."-".$key."\").innerHTML=\"<a href='mailto:\"+\"".$emailparts[0]."\"+\"@\"+\"".$emailparts[1]."'>".$emailparts[0]."\"+\"@\"+\"".$emailparts[1]."</a>\";
+				
+				</script>
+				<!--fb end email-->";
+                $text = preg_replace("/".$email."/i", $newemail, $text, 1, $count);
+            }
+      }
+      return $text;
+}
+}
+
+
+
+if(!function_exists("decodeSafeEmails")) {
+function decodeSafeEmails($text) {
+	$text = preg_replace("/[\r\n]/","",$text); // remove line breaks first
+	if(preg_match_all('/<!--fb start email-->(.*?)<!--fb end email-->/', $text, $emails)){
+		foreach ($emails[0] as $email) { 
+			$fauxemail = getTextBetweenTags($email, "noscript");
+			$emailparts = explode(" at ",$fauxemail);
+			$text = str_replace($email, $emailparts[0]."@".$emailparts[1], $text);
+		}
+	}
+	return $text;
+}
+}
+
+if(!function_exists("getTextBetweenTags")) {
+function getTextBetweenTags($string, $tagname) {
+    $pattern = "/<".$tagname."(.*?)>(.*?)<\/".$tagname.">/i";
+    if(preg_match($pattern, $string, $matches)) {
+    	return $matches[2];
+	}
+}
+}
+
+if(!function_exists("javascript_friendly_text")) {
+function javascript_friendly_text($string) {
+	$search = array("/(\r\n|\r|\n)/"); // better than nl2br
+	$replace = array("<br />");   
+    $string = preg_replace($search, $replace, $string);
+    return addslashes($string);
+}
+}
+if(!function_exists("getImageURL")) {
+function getImageURL($imageURL, $size="", $directory="", $nocache = false) {
+	if(strpos($imageURL,"http")===0) { // is external image so just return as is
+		return htmlentities($imageURL, ENT_COMPAT, "UTF-8");
+	} else {
+		global $image_sizes;
+		$url = pathinfo($imageURL);
+		$directory .= (isset($url['dirname']) && $url['dirname'] !=".") ? $url['dirname']."/" : "";
+		$newimageURL = $directory;
+		if(strpos($imageURL, ".svg")===false && strpos($imageURL, ".gif")===false) {
+			// do not get sizes for svg - or gif as may be animated
+			$newimageURL .= isset($image_sizes[$size]["prefix"]) ? $image_sizes[$size]["prefix"] : $size ; // if prefix exists use that otherwise size
+		}
+		$newimageURL .= @$url['basename'];
+		$path = UPLOAD_ROOT.$newimageURL; 	
+		if((is_readable($path) && is_file($path)) || (is_readable(SITE_ROOT.$newimageURL) && is_file(SITE_ROOT.$newimageURL))) {	
+			$newimageURL .= ($nocache) ? "?rand=".rand() : "";	
+			$newimageURL =  strpos($newimageURL,"Uploads/")===false ?  "Uploads/".$newimageURL : $newimageURL; // compatible full path in imageURL
+			return substr($newimageURL,0,1)=="/" ? htmlentities($newimageURL, ENT_COMPAT, "UTF-8") : "/".htmlentities($newimageURL, ENT_COMPAT, "UTF-8");
+		} 
+		
+	
+	}
+	return "/core/images/spacer.gif?cannotfind=".htmlentities($imageURL, ENT_COMPAT, "UTF-8");
+}
+}
+
+if(!function_exists("showMedia")) { // will show media depending on extension: video, image or download
+function showMedia($mediaURL, $size="", $video_attr = "controls", $force_link= false) {
+	echo "<div class=\"fb_media_wrapper\">";
+	$mediaURL = strpos($mediaURL,"Uploads/")===false ?  "/Uploads/".$mediaURL : "/".$mediaURL;
+	if(is_readable(SITE_ROOT.$mediaURL) && is_file(SITE_ROOT.$mediaURL)) {
+	if(!$force_link && preg_match("/[\w\-]+\.(jpg|png|gif|jpeg|mp4)/", $mediaURL)) {
+		if(preg_match("/[\w\-]+\.(mp4)/", $mediaURL)) {
+			echo "<video ".htmlentities($video_attr)."><source src=".$mediaURL."></video>";
+		} else {
+			echo "<img src=". getImageURL($mediaURL, $size)." />";
+		}
+		
+	} else {
+		echo "<a href=\"".$mediaURL."\">Download file</a>";
+	}
+	} else {
+		echo "File not found: ".htmlentities(SITE_ROOT.$mediaURL,ENT_COMPAT, "UTF-8");
+	}
+	echo "</div>";
+	
+}
+}
+
+
+
+if(!function_exists("truncate")) {
+function truncate($text, $length) {
+	
+	if($length == ".") {  // capture first sentence
+		if(strlen($text)>0) {
+			$sentences = preg_split("/[\.?!]/",$text);
+			$text = $sentences[0].".";
+		}
+	} else {
+	
+   $length = abs((int)$length);
+	if($length>0) {
+	  
+	   if(strlen($text) > $length) {
+		    $text = strip_tags($text); // cannot truncate if HTML
+		  $text = preg_replace("/^(.{1,$length})(\s.*|$)/s", '\\1...', $text);
+	   }
+	 }
+	}
+   return($text);
+}
+}
+
+if(!function_exists("post_request")) {
+function post_request($url, $data, $referer='') {
+ 
+    // Convert the data array into URL Parameters like a=b&foo=bar etc.
+    $data = http_build_query($data);
+ 
+    // parse the given URL
+    $url = parse_url($url);
+ 
+    if ($url['scheme'] != 'http') { 
+        die('Error: Only HTTP request are supported !');
+    }
+ 
+    // extract host and path:
+    $host = $url['host'];
+    $path = $url['path'];
+ 
+    // open a socket connection on port 80 - timeout: 30 sec
+    $fp = fsockopen($host, 80, $errno, $errstr, 30);
+ 
+    if ($fp){
+ 
+        // send the request headers:
+        fputs($fp, "POST $path HTTP/1.1\r\n");
+        fputs($fp, "Host: $host\r\n");
+ 
+        if ($referer != '')
+            fputs($fp, "Referer: $referer\r\n");
+ 
+        fputs($fp, "Content-type: application/x-www-form-urlencoded\r\n");
+        fputs($fp, "Content-length: ". strlen($data) ."\r\n");
+        fputs($fp, "Connection: close\r\n\r\n");
+        fputs($fp, $data);
+ 
+        $result = ''; 
+        while(!feof($fp)) {
+            // receive the results of the request
+            $result .= fgets($fp, 128);
+        }
+    }
+    else { 
+        return array(
+            'status' => 'err', 
+            'error' => "$errstr ($errno)"
+        );
+    }
+ 
+    // close the socket connection:
+    fclose($fp);
+ 
+    // split the result header from the content
+    $result = explode("\r\n\r\n", $result, 2);
+ 
+    $header = isset($result[0]) ? $result[0] : '';
+    $content = isset($result[1]) ? $result[1] : '';
+ 
+    // return as structured array:
+    return array(
+        'status' => 'ok',
+        'header' => $header,
+        'content' => $content
+    );
+}
+}
+
+if(!function_exists("encrypt")) {
+function encrypt($text) 
+{ 
+    if(function_exists("mcrypt_encrypt") && defined("PRIVATE_KEY")) {
+		return trim(base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, PRIVATE_KEY, $text, MCRYPT_MODE_ECB, mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB), MCRYPT_RAND)))); 
+	} else {
+		return base64_encode($text);
+	}
+} 
+}
+
+if(!function_exists("decrypt")) {
+function decrypt($text) 
+{ 
+ if(function_exists("mcrypt_decrypt") && defined("PRIVATE_KEY")) {
+    return trim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, PRIVATE_KEY, base64_decode($text), MCRYPT_MODE_ECB, mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB), MCRYPT_RAND)));
+ } else {
+		return base64_decode($text);
+	}
+} 
+}
+
+if(!function_exists("natural_sort_table")) {
+function natural_sort_table( $table="", $sortcolumn = "", $ordercolumn = "ordernum") {
+	global $database_aquiescedb, $aquiescedb;
+	if(trim($sortcolumn!="") && trim($table)!="") {
+		$select = "SELECT ID, ".$sortcolumn.", ".$ordercolumn." FROM ".$table." ORDER BY ".$ordercolumn;
+		mysql_select_db($database_aquiescedb, $aquiescedb);
+		$result = mysql_query($select, $aquiescedb) or die(mysql_error()).": ".$select;
+		if(mysql_num_rows($result)>0) {
+			
+			
+			$keys = array();
+			$values = array();
+			while($row = mysql_fetch_assoc($result)) {
+			   $key = $row[$sortcolumn].'__'. $row['ID']; // Add the index to create an unique key.
+			   $keys[] = $key;
+			   $values[$key] = $row; 
+			}
+			natsort($keys);
+			$sortedValues = array(); 
+			foreach($keys as $index) {
+			  $sortedValues[] = $values[$index]; 
+			}
+			
+			foreach($sortedValues as $key => $values) {
+				$update = "UPDATE ".$table." SET ".$ordercolumn." = ".intval($key+1)." WHERE ID = ".intval($values['ID']);
+				mysql_query($update, $aquiescedb) or die(mysql_error()).": ".$update;
+			}			
+		}
+	}
+}
+}
+
+if(!function_exists("duplicateMySQLRecord")) {
+function duplicateMySQLRecord ($table, $id=1, $id_field="ID", $new_id = "NULL") { // new ID optional NULL = auto generate
+	global $database_aquiescedb, $aquiescedb;
+	mysql_select_db($database_aquiescedb, $aquiescedb);
+	// using this optionally make sure any linking tables are updated also
+	
+    // load the original record into an array
+    $result = mysql_query("SELECT * FROM `".$table."` WHERE `".$id_field."`=".intval($id));
+	if(mysql_num_rows($result)>0) {
+		$original_record = mysql_fetch_assoc($result);
+		
+		// insert the new record and get the new auto_increment id
+		mysql_query("INSERT INTO `".$table."` (`".$id_field."`) VALUES (".$new_id .")");
+		$newid = mysql_insert_id();
+		
+		// generate the query to update the new record with the previous values
+		$query = "UPDATE `".$table."` SET ";
+		foreach ($original_record as $key => $value) {
+			if ($key != $id_field) {
+				$query .= '`'.$key.'` = ';
+				$query .= is_null($value) ? 'NULL' : '"'.str_replace('"','\"',$value).'"';
+				$query .= ', ';
+			}
+		} 
+		$query = substr($query,0,strlen($query)-2); # lop off the extra trailing comma
+		$query .= " WHERE `".$id_field."`=".$newid;
+		mysql_query($query);
+		
+		// return the new id
+		return $newid;
+	} else return false;
+}
+}
+
+
+if(!function_exists("anonymiser")) {
+function anonymiser($firstname, $surname) {
+	global $database_aquiescedb, $aquiescedb, $regionID;
+	mysql_select_db($database_aquiescedb, $aquiescedb);
+	$select = "SELECT * FROM preferences WHERE ID =".$regionID;
+	$result=mysql_query($select, $aquiescedb) or die(mysql_error());
+	$row = mysql_fetch_assoc($result);
+	switch($row['userpostalias']) {
+		case 1 : return $firstname." ".substr($surname,0,1);
+		case 2 : return substr($firstname,0,1).substr($surname,0,1);
+		case 3 : return "Visitor";
+		default : return $firstname." ".$surname;
+	}
+}
+}
+
+if(!function_exists("createURLname")) {
+function createURLname($urlname="", $title="", $space="-", $table = "", $id = 0) {
+	global $database_aquiescedb, $aquiescedb, $regionID;
+	$regionID = (isset($regionID) && $regionID>0) ? $regionID : 1;
+	mysql_select_db($database_aquiescedb, $aquiescedb);
+	// if no url name supplied will create one from title, otherwise will fix any existing for chars, duplicates etc
+	$urlname = ($urlname == "") ? trim($title) : trim($urlname);
+	$urlname = preg_replace("/[^a-zA-Z0-9_\-]/", $space, $urlname);
+	// check for duplicates
+	if($table != "") {
+		$where = $id>0 ?  " AND ".$table.".ID != ".intval($id) : ""; // if updating then exclude current ID
+		// create SQL
+		switch($table) {
+			case "product" : $selectwhere = " LEFT JOIN productinregion ON (product.ID = productinregion.productID) WHERE productinregion.regionID = ".intval($regionID)." AND statusID = 1 " ; break;
+			case "news" : $selectwhere = " LEFT JOIN newssection ON (news.sectionID = newssection.ID) WHERE (newssection.regionID IS NULL OR  newssection.regionID = ".intval($regionID).")" ; break;
+			case "article" : $selectwhere = " WHERE regionID = ".intval($regionID)." AND versionofID IS NULL"; break;
+			// articlesection
+			default: $selectwhere = " WHERE regionID = ".intval($regionID);
+		}
+		$i = 0;
+		do { // find next available integer			
+			// start without integer at end
+			$newurlname = $i>0 ? $urlname."-".$i : $urlname; 
+			$select = "SELECT ".$table.".ID FROM ".$table." ".$selectwhere."  AND ".$table.".longID LIKE ".GetSQLValueString($newurlname,"text")." ".$where." LIMIT 1";				
+			$result = mysql_query($select, $aquiescedb) or die(mysql_error().": ".$select);			
+			$i++; 
+		} while(mysql_num_rows($result)>0);
+		$urlname = $newurlname;
+	}
+	// replace any leading integers
+	if(intval(substr($urlname,0,1))>0) {
+		$urlname = $space.$urlname;
+	}
+	return $urlname;
+}
+}
+
+
+if(!function_exists("createPagination")) {
+ function createPagination($pageNum,$totalPages,$rsName="",$maxlisted=20, $thisURL = "") { 
+ //$thisURL  only required if on page content called via AJAX
+ if($totalPages>0) {
+	if($thisURL != "") {
+		$url_parts = parse_url($thisURL);
+		$thisURL = $url_parts['path'];
+		$queryString = $url_parts['query'];
+	} else {
+		$queryString = !empty($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : "";
+	}
+ 	
+	if (strlen($queryString)>0) {
+  		$params = explode("&", $queryString);
+  		$newParams = array();
+  		foreach ($params as $param) {
+    		if (stristr($param, "pageNum_".$rsName) == false && 
+        		stristr($param, "totalRows_".$rsName) == false) {
+      			array_push($newParams, $param);
+    		}
+  		}
+  		if (count($newParams) != 0) {
+    		$queryString = "&" . htmlentities(implode("&", $newParams));
+  		} else {
+			$queryString = "";
+		}
+	}
+ 	$maxlisted=floor(($maxlisted-2)/2); // either side and less start and end
+    $start = (($pageNum - $maxlisted) >= 0) ? $pageNum - $maxlisted : 0;
+	$extend = $maxlisted - $pageNum > 0 ?   $maxlisted - $pageNum : 0;
+    $end  = (($pageNum + $maxlisted) < $totalPages) ? $pageNum + $maxlisted + $extend : $totalPages;
+	$end = $end > $totalPages ? $totalPages : $end;
+	
+    $html       = '<nav aria-label="Results pages"><ul class="fb_pagination">';
+ 
+    if( $pageNum > 0 ) {
+    	$html .= '<li class="' . $class . '">'.createPaginationLink($pageNum-1,$totalPages,$rsName,$queryString,"<",$thisURL).'</li>';
+	} 
+    if ( $start > 0 ) {
+        $html .= '<li>'.createPaginationLink(0,$totalPages,$rsName,$queryString, "",$thisURL).'</li>';
+        $html .= '<li><span>...</span></li>';
+    } 
+    for ($i = $start ; $i <= $end; $i++) {
+        $class  = ($pageNum == $i) ? "active" : "";
+        $html .= '<li class="' . $class . '">'.createPaginationLink($i,$totalPages,$rsName,$queryString,"",$thisURL).'</li>';
+    }
+ 
+    if ($end < $totalPages) {
+        $html .= '<li><span>...</span></li>';
+        $html .= '<li>'.createPaginationLink($totalPages,$totalPages,$rsName,$queryString,"",$thisURL).'</li>';
+    }
+ 
+    if ($pageNum < $totalPages) {
+    	$html .= '<li class="' . $class . '">'.createPaginationLink($pageNum+1,$totalPages,$rsName,$queryString,">",$thisURL).'</li>';
+	}
+ 
+    $html .= '</ul></nav>';
+ 
+    return $html; 
+  }
+ }
+}
+  
+if(!function_exists("createPaginationLink")) {
+	function createPaginationLink($page,$totalPages,$rsName="",$queryString="",$link="",$thisURL = "") {	
+	// thisURL, if specified, must be wthout query string
+	  $link = $link=="" ? ($page+1) : $link;
+	  $thisURL = $thisURL =="" ? $_SERVER["PHP_SELF"] : $thisURL;
+	  $html ="<a href=\"".sprintf("%s?pageNum_%s=%d%s", $thisURL, $rsName, min($totalPages, $page), $queryString)."\">".$link."</a>"; 
+	  return $html;
+  }
+}
+
+if(!function_exists("writeLog")) {
+function writeLog($log) {
+	
+	$directory = UPLOAD_ROOT."_log".DIRECTORY_SEPARATOR;
+	$filename = "log-".date('Y-m-d').".txt";
+	$write = date('Y-m-d H:i:s')." ".$log."\n";
+	if(!is_dir($directory)) { mkdir($directory,0777); chmod($directory,0777); } 
+	if($handle = @fopen($directory.$filename,"ab")) { // b for portability with alternate file systems
+	fwrite($handle, $write);
+	fclose($handle);
+	return true;
+	}
+}
+}
+
+if(!function_exists("getLog")) {
+function getLog($date="") {	
+	$date = ($date == "") ? date('Y-m-d') : $date;
+	$filename = UPLOAD_ROOT."_log".DIRECTORY_SEPARATOR."log-".$date.".txt";
+	$log = openFile($filename);
+	$log =  $log ? $log : "Log empty";
+	return $filename.":\n\n".$log;	
+}
+}
+
+// file handling functions
+if(!function_exists("openFile")) {
+function openFile($filename) {
+	$file = @fopen($filename, "r");
+	if($file) { 
+	$filecontents = "";
+	//Output a line of the file until the end is reached
+	while(!feof($file))
+  	{
+   		$filecontents .= fgets($file);
+  	}
+		fclose($file);
+		return $filecontents;
+	} else {
+		return false;
+	}
+}
+}
+
+if(!function_exists("saveFile")) {
+function saveFile($filename,$filecontents) {
+	$result = false;
+	@unlink($filename);  // delete first if exists - works better with permissions		
+		$pathinfo = pathinfo($filename);// create directory first if doesn't exist...
+		createDirectory($pathinfo['dirname']);
+		if($file = @fopen($filename,"w")) { // create file for write
+			fwrite($file, $filecontents);
+			fclose($file);
+			$result = true;
+		} 
+	
+	return $result;
+}
+}
+
+
+if(!function_exists("updateFile")) {
+function updateFile($filename,$search,$replace) {
+	$result = false;
+	$filecontents = openFile($filename);
+	if($filecontents) {
+		$filecontents = str_replace($search, $replace, $filecontents);
+		if(saveFile($filename, $filecontents)) {
+			$result = true; 
+		}
+	}
+	return $result;	
+}
+}
+
+if(!function_exists("updatePreference")) {
+function updatePreference($prefname,$value) {
+	if(defined($prefname)) {
+	$filename = SITE_ROOT."/Connections/preferences.php";
+	$search = "define(\"".$prefname."\",\"".constant($prefname)."\")";
+	$replace = "define(\"".$prefname."\",\"".$value."\")";
+	return updateFile($filename,$search,$replace);
+	} else {
+	return false;
+	}
+}
+}
+
+
+if(!function_exists("deleteFile")) {
+function deleteFile($file) {
+	
+	if(file_exists($file)) {
+		if(is_writeable($file)) {
+			if(unlink($file)) {
+				return "success";
+			}
+			return "failed";
+		}
+		return "failed";
+	}
+	return "notfound";
+}
+}
+
+if(!function_exists("createDirectory")) {
+	function createDirectory($directory) {
+		// we need to add backward compat for php4 here soon
+		if(!is_dir($directory)) {
+			if(PHP_VERSION >=5) {
+				@mkdir($directory,0777,true) or die("Server permissions need to be modified to allow this site to create the directory: ".$directory); 
+			} else {
+				@mkdir($directory,0777) or die("Server permissions need to be modified to allow this site to create the directory: ".$directory);
+			}			
+			chmod($directory,0777);
+			$body_content="<!-- See no evil, speak no evil, hear no evil, do no evil -->"; // add an index file so directory cannot be listed
+			$file_name= $directory."index.htm";              
+			$fp = fopen ($file_name, "w");  
+			fwrite ($fp,$body_content);         
+			fclose ($fp);                     
+			chmod($file_name,0777);           // changing the file permission to be overwritten if necessary
+		}
+	}
+}
+
+
+if(!function_exists("deleteUpload")) {
+function deleteUpload($uploadID) {
+	$uploadID = intval($uploadID);
+	global $database_aquiescedb, $aquiescedb, $image_sizes;
+	
+	if($uploadID>0) {
+		$select = "SELECT newfilename FROM uploads WHERE ID = ".$uploadID;
+		mysql_select_db($database_aquiescedb, $aquiescedb);
+		$result = mysql_query($select, $aquiescedb) or die(mysql_error());
+		if(mysql_num_rows($result)>0) {
+			$row = mysql_fetch_assoc($result);
+			
+			
+			// delete resized pictures
+			foreach($image_sizes as $size => $value) {
+				$result = deleteFile(getImageURL($row['newfilename'], $size));
+				
+			}
+			$result = deleteFile($row['newfilename']);
+			if($result!="failed") {
+				$delete = "DELETE FROM uploads WHERE ID = ".$uploadID;
+				mysql_query($delete, $aquiescedb) or die(mysql_error());
+				// also delete from anywher else in the 
+				// database it might be referenced
+				
+				return true;
+			} 
+			
+		}
+	}
+	return false;
+}
+}
+
+
+
+
+
+if(!function_exists('mime_content_type')) {
+	// this function is built in to some versions of PHP
+
+    function mime_content_type($filename) {
+
+        $mime_types = array(
+
+            'txt' => 'text/plain',
+            'htm' => 'text/html',
+            'html' => 'text/html',
+            'php' => 'text/html',
+            'css' => 'text/css',
+            'js' => 'application/javascript',
+            'json' => 'application/json',
+            'xml' => 'application/xml',
+            'swf' => 'application/x-shockwave-flash',
+            'flv' => 'video/x-flv',
+
+            // images
+            'png' => 'image/png',
+            'jpe' => 'image/jpeg',
+            'jpeg' => 'image/jpeg',
+            'jpg' => 'image/jpeg',
+            'gif' => 'image/gif',
+            'bmp' => 'image/bmp',
+            'ico' => 'image/vnd.microsoft.icon',
+            'tiff' => 'image/tiff',
+            'tif' => 'image/tiff',
+            'svg' => 'image/svg+xml',
+            'svgz' => 'image/svg+xml',
+
+            // archives
+            'zip' => 'application/zip',
+            'rar' => 'application/x-rar-compressed',
+            'exe' => 'application/x-msdownload',
+            'msi' => 'application/x-msdownload',
+            'cab' => 'application/vnd.ms-cab-compressed',
+
+            // audio/video
+            'mp3' => 'audio/mpeg',
+            'qt' => 'video/quicktime',
+            'mov' => 'video/quicktime',
+
+            // adobe
+            'pdf' => 'application/pdf',
+            'psd' => 'image/vnd.adobe.photoshop',
+            'ai' => 'application/postscript',
+            'eps' => 'application/postscript',
+            'ps' => 'application/postscript',
+
+            // ms office
+            'doc' => 'application/msword',
+            'rtf' => 'application/rtf',
+            'xls' => 'application/vnd.ms-excel',
+            'ppt' => 'application/vnd.ms-powerpoint',
+
+            // open office
+            'odt' => 'application/vnd.oasis.opendocument.text',
+            'ods' => 'application/vnd.oasis.opendocument.spreadsheet',
+        );
+
+        $ext = strtolower(array_pop(explode('.',$filename)));
+        if (array_key_exists($ext, $mime_types)) {
+            return $mime_types[$ext];
+        }
+        elseif (function_exists('finfo_open')) {
+            $finfo = finfo_open(FILEINFO_MIME);
+            $mimetype = finfo_file($finfo, $filename);
+            finfo_close($finfo);
+            return $mimetype;
+        }
+        else {
+            return 'application/octet-stream';
+        }
+    }
+}
+
+if(!function_exists("zipFile")) {
+function zipFile($file) {
+	if(class_exists("ZipArchive") && PHP_VERSION>4) {	
+		$result = false;
+		$zip = new ZipArchive();
+		$filename = substr($file,0,strrpos($file,".")).".zip";
+		
+		
+		if(is_readable($file)) { 
+			if($zip->open($filename, ZipArchive::CREATE)===true) {		
+				$result = $zip->addFile($file, basename($file));//die($result);
+				if($zip->close()===true && $result === true){
+					unlink($file);
+					return $filename;
+				}		
+			}
+		}
+	}
+	return $file;
+}
+}
+
+if(!function_exists("ftp_put_file")) {
+function ftp_put_file($local_file, $server, $user, $pass, $remote_path = "") {
+	set_time_limit(1200); // 20 mins
+	ini_set("max_execution_time",1200);
+	
+	$localname = pathinfo($local_file);
+	
+	// set up basic connection
+	$conn_id = @ftp_connect($server, 21, 1200) or die("Couldn't connect to ".$server);
+
+	// login with username and password
+	@ftp_login($conn_id, $user, $pass) or die("Login to ".$server." failed with ".$user." / ". $pass);
+	$result  = ftp_pasv ($conn_id, TRUE);
+	// try to upload $file
+	
+	//$remote_file = ($remote_path == "") ? $localname['basename'] : $remote_path.$localname['basename'];
+
+	$remote_file =  $localname['basename'];
+	if(!ftp_chdir($conn_id, $remote_path)) {	
+		ftp_mksubdirs($conn_id,".",$remote_path);
+	}
+	
+	$ret = ftp_nb_put($conn_id, $remote_file, $local_file, FTP_BINARY, ftp_size($conn_id,$remote_file)); // auto resume if needbe...
+	while ($ret == FTP_MOREDATA) {   
+   		// add other code here
+   		// Continue uploading...
+   		$ret = ftp_nb_continue($conn_id);
+	}
+	return $ret;	
+}
+}
+
+
+if(!function_exists("ftp_get_file")) {
+function ftp_get_file($remote_file,  $server, $user, $pass, $local_path=UPLOAD_ROOT , $delete_after_get = false) {
+	set_time_limit(1200); // 20 mins
+	ini_set("max_execution_time",1200);
+	
+	$remotename = pathinfo($remote_file);
+	$local_file = $local_path.$remotename['basename'];
+
+	// set up basic connection
+	$conn_id = ftp_connect($server, 21, 1200);
+	if($conn_id) {
+		// login with username and password
+		if(ftp_login($conn_id, $user, $pass)) {
+			$result  = ftp_pasv ($conn_id, TRUE);
+			// try to upload $file
+			
+			$ret = ftp_nb_get($conn_id, $local_file, $remote_file, FTP_BINARY, @filesize($local_file)); // auto resume if needbe...
+			while ($ret == FTP_MOREDATA) {   
+				// add other code here
+				// Continue uploading...
+				$ret = ftp_nb_continue($conn_id);
+			}
+			if($delete_after_get && $ret == FTP_FINISHED) {
+				if(ftp_delete($conn_id ,$remote_file)) {
+					// file deleted
+				} else {
+					$ret = "Could not delete remote file";
+				}
+			}
+			return $ret;
+		}
+		return "FTP login failed";
+	}
+	return "Could not connect to server";
+}
+}
+
+if(!function_exists("ftp_mksubdirs")) {
+	//function to create nested FTP drectories
+function ftp_mksubdirs($ftpcon,$ftpbasedir,$ftpath){
+   if(!@ftp_chdir($ftpcon, $ftpbasedir)) {
+	   die("Can't access: ".$ftpbasedir);
+   }
+   $parts = explode('/',$ftpath); 
+   foreach($parts as $part){
+      if(!@ftp_chdir($ftpcon, $part)){
+         if(!ftp_mkdir($ftpcon, $part)) {
+			 die("Can't create: ".$part);
+		 }
+         ftp_chdir($ftpcon, $part);
+      }
+   }
+}
+}
+
+
+if(!function_exists("backgroundPost")) {
+function backgroundPost($url){
+  $parts=parse_url($url);
+ 
+  $fp = fsockopen($parts['host'], 
+          isset($parts['port'])?$parts['port']:80, 
+          $errno, $errstr, 30);
+ 
+  if (!$fp) {
+      return false;
+  } else {
+      $out = "POST ".$parts['path']." HTTP/1.1\r\n";
+      $out.= "Host: ".$parts['host']."\r\n";
+      $out.= "Content-Type: application/x-www-form-urlencoded\r\n";
+      $out.= "Content-Length: ".strlen($parts['query'])."\r\n";
+      $out.= "Connection: Close\r\n\r\n";
+      if (isset($parts['query'])) $out.= @$parts['query'];
+ 
+      fwrite($fp, $out);
+      fclose($fp);
+      return true;
+  }
+}
+}
+ 
+//Example of use
+//backgroundPost('http://example.com/slow.php?file='. urlencode('some file.dat'));
+
+if(!function_exists("postAnything")) {
+function postAnything($tablename, $updateID = 0) {
+	global $database_aquiescedb, $aquiescedb;
+	if(!empty($_POST)) {
+		
+	mysql_select_db($database_aquiescedb, $aquiescedb);
+	$tablename2 = GetSQLValueString($tablename, "text");
+	$select  = "SELECT * FROM INFORMATION_SCHEMA.COLUMNS  WHERE  TABLE_NAME = ".$tablename2;
+	$result = mysql_query($select, $aquiescedb) or die(mysql_error());
+	if(mysql_num_rows($result)>0) {
+		unset($column_names,$data_values);
+		$column_names = array();
+		$data_values = array();
+		while($schema = mysql_fetch_assoc($result)) {
+			$column_name = $schema['COLUMN_NAME'];
+			if($column_name!="ID" && array_key_exists ($column_name , $_POST )) {
+				
+				// column match with post
+	
+				$postdata = $_POST[$column_name];
+				if(strpos($schema['DATA_TYPE'],"int")!==false) {
+					$data_type = "int";
+				} else if(strpos($schema['DATA_TYPE'],"date")!==false) {
+					$data_type = "date";
+				
+				} else if(strpos($schema['DATA_TYPE'],"decimal")!==false || strpos($schema['DATA_TYPE'],"float")!==false) {
+					$data_type = "double";
+				} else  {
+					$data_type = "text";				
+				}
+				$data_value = GetSQLValueString($postdata, $data_type);
+			array_push($column_names, $column_name);
+			array_push($data_values, $data_value);
+			} // end matching column
+		} // end while
+		
+		if(count($column_names)>=1) {
+		if($updateID>0) {
+			// checkboxes can/must be accompanied by hidden fields  with array checkbox[checkboxname] to determine which exist. We can then delete all values for these before updating checked values.
+		foreach($_POST['checkbox'] as $fieldname => $value) {
+			$update = "UPDATE ".$tablename." SET ".GetSQLValueString($fieldname,"text")." = 0 WHERE ID = ".intval($updateID);
+			mysql_query($update, $aquiescedb) or die(mysql_error().": ".$update);
+		}
+		
+		// now update other values
+		$update = "UPDATE ".$tablename." SET ";
+		$first = true;
+		foreach($column_names as $key=> $column_name) {
+			
+			if($first) {
+				$first = false;
+			} else {
+				$update .= " , ";
+			}
+			$update .= $column_name ." = " .$data_values[$key];
+		}
+			$update .= " WHERE ID = ".intval($updateID);
+			mysql_query($update, $aquiescedb) or die(mysql_error().": ".$update);
+			return $update;
+		} else {
+			$insert = "INSERT INTO ".$tablename." (".implode(",",$column_names).") VALUES (".implode(",",$data_values).")";
+			mysql_query($insert, $aquiescedb) or die(mysql_error().": ".$insert);
+			return $insert;
+		} // end insert
+		} // is columns
+	} // is sdata
+	
+	return false;
+}
+}
+}
+
+if(!function_exists("addNotification")) {
+function addNotification($notification="", $regionID = 0, $userID = 0, $rankID = 0, $groupID = 0, $createdbyID = 0) {
+	global $database_aquiescedb, $aquiescedb;
+	mysql_select_db($database_aquiescedb, $aquiescedb);
+	$insert = "INSERT INTO (`notification`,`userID`,`rankID`, `groupID`,`regionID`, `createdbyID,`createddatetime`) VALUES (".GetSQLValueString($notification, "text").",".GetSQLValueString($regionID, "int").",".GetSQLValueString($userID, "int").",".GetSQLValueString($rankID, "int").",".GetSQLValueString($groupID, "int").",".GetSQLValueString($createdbyID, "int").",NOW())";
+	mysql_query($insert, $aquiescedb) or die(mysql_error());
+	return mysql_insert_id();
+	
+}
+}
+
+/* returns the shortened url */
+if(!function_exists("get_bitly_short_url")) {
+	
+function get_bitly_short_url($url,$bitly_login="digitaldexterity",$bitly_appkey="R_feff6478f326484ab02017feb7ec10ce",$format='txt') {
+	$connectURL = 'http://api.bit.ly/v3/shorten?login='.$bitly_login.'&apiKey='.$bitly_appkey.'&uri='.urlencode($url).'&format='.$format;
+	$short_url =  curl_get_result($connectURL);
+	$url = substr($short_url,0,4)=="http" ? $short_url : $url;
+	return $url;
+}
+}
+
+
+/* returns a result form url */
+if(!function_exists("curl_get_result")) {
+function curl_get_result($url) {
+	$ch = curl_init();
+	$timeout = 5;
+	curl_setopt($ch,CURLOPT_URL,$url);
+	curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+	curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,$timeout);
+	$data = curl_exec($ch);
+	curl_close($ch);
+	return $data;
+}
+}
+
+if(!function_exists("getEncryptedFields")) {
+function getEncryptedFields() {
+	global $database_aquiescedb, $aquiescedb;
+	$encrypted_fields = array();
+	mysql_select_db($database_aquiescedb, $aquiescedb);
+	if(defined("MYSQL_SALT")) {
+		$select = "SELECT encrypted_fields FROM preferences WHERE ID = 1";
+		$result = mysql_query($select, $aquiescedb) or die(mysql_error());
+		if(mysql_num_rows($result)>0) {
+			$row = mysql_fetch_assoc($result);
+			$encrypted_fields = json_decode($row['encrypted_fields'], true);
+		} 
+	}
+	return $encrypted_fields;
+}
+}
+
+?>

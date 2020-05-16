@@ -1,0 +1,52 @@
+@charset "UTF-8";
+/* CSS Document */
+
+.userIdSelectorWrapper {
+	position:relative;
+	display:inline;
+}
+
+.userIdSelectorWrapper input[type='text'] {
+	width:200px;
+}
+
+.userIdSelectorResults {
+	position:absolute;
+	top: 1.5em;
+	left:0;
+	z-index:100;
+	width:auto;
+}
+
+.userIdSelectorResults ul {
+	list-style:none;
+	margin:0;
+	padding:0;
+	background-color:#fff;
+	border: 1px solid #666;
+}
+
+.userIdSelectorResults ul li {
+	list-style:none;
+	margin:0;
+	padding: .25em;
+	width:auto;
+	overflow:hidden;
+	white-space:nowrap;
+}
+
+.userIdSelectorResults ul li:hover {
+	background-color:#CCC;
+	cursor:pointer;
+}
+
+.userIdSelectorResults ul li  a {
+	text-decoration:none;
+	color:#666;
+	display:block;
+	float:left;
+	margin-left:5px;
+}
+
+
+

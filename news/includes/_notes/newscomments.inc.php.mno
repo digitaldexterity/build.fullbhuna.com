@@ -1,0 +1,1 @@
+﻿<?xml version="1.0" encoding="utf-8" ?><info>	<infoitem key="UD_rsComments" value="name:ID;datatype:int,name:commenttext;datatype:blob,name:createddatetime;datatype:datetime,name:firstname;datatype:string,name:surname;datatype:string,name:imageURL;datatype:string,name:createdbyID;datatype:int" /></info>

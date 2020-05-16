@@ -1,0 +1,148 @@
+#newsFeedBox h3 {
+	margin-top: 0px;
+}
+#newsFeedBox p {
+	margin-top: 0px;
+}
+
+#newsFeedBox {
+	background-color: #E6E6FF;
+	float: right;
+	width: 140px;
+	padding-top: 0px;
+	padding-right: 5px;
+	padding-bottom: 5px;
+	padding-left: 5px;
+	margin-left: 5px;
+		border: 1px solid #DEDEF6;
+
+	
+}
+
+
+#newsCategories {
+}
+
+#newsCategories ul {
+	margin:0px;
+	border:0px;
+	list-style:none;
+}
+
+#newsCategories ul li {
+	margin:0px;
+	border:0px;
+	list-style:none;
+}
+
+#newsCategories ul li a {
+	display:block;
+}
+
+.newsItem-wrapper {
+	
+	margin-bottom:10px;
+	width:100%;
+	overflow:hidden;
+}
+
+a.newsItem {
+	display:block;
+	text-decoration:none;
+	position:relative;
+	
+	margin: 0 0 0 150px;
+	padding: 0 0 10px 0;
+	border:none;
+	
+}
+.newsItem img {
+	float:left;
+	margin: 0 20px 20px -150px;
+	
+}
+
+
+
+
+.newsItem h2 {
+	margin-top:0;
+}
+
+a.newsItem .newsIndexReadMore:after {
+	content: "...";
+}
+
+
+
+#memberfeed {
+}
+
+#memberfeed .item {
+	margin: 0;
+	padding: 5px 0;
+}
+
+#memberfeed .item:hover {
+	background-color:#F6F6F6;
+}
+
+#memberfeed .item:hover .mouseOutHide {
+	visibility:visible;
+}
+
+#memberfeed .fb_avatar {
+	width:48px;
+	height:48px;
+	float:left;
+}
+
+#memberfeed .creator {
+	margin: 0 0 5px 60px;
+	
+}
+
+#memberfeed .creator a {
+	text-decoration:none;
+	font-weight:bold;
+	color:#666;
+}
+#memberfeed .creator a:hover {
+	text-decoration:underline;
+}
+
+#memberfeed .title {
+	margin: 0 0 0 60px;
+	font-weight:bold;
+}
+
+
+#memberfeed .summary {
+	margin: 0 0 0 60px;
+}
+
+#memberfeed .link {
+	margin: 0 0 0 60px;
+}
+
+
+
+#memberfeed .image {
+	margin: 5px 0 5px 60px;
+}
+
+#memberfeed .datetime {
+	margin: 5px 0 0 60px;
+	
+}
+
+#memberfeed .datetime abbr {
+	border-bottom-width: 0;
+	color:#999;
+}
+
+#memberfeed .editpost {
+	float:right;
+}
+
+

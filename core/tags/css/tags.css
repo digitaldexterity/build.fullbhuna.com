@@ -1,0 +1,15 @@
+#tagname {
+	display:none;
+}
+
+.tag {
+	display:inline-block;
+	padding-right:1em;
+}
+
+.tag .delete_tag {
+	display:inline-block;
+	padding-right:0.25em;
+	cursor:pointer;
+
+}

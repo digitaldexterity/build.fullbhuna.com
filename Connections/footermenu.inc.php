@@ -1,0 +1,2 @@
+<div class='footerMenu'><ul></ul></div><div class='footerMenu'><p align='center'>&copy; 2006 - <?php echo date('Y'); ?> Full Bhuna Content Management System developed and built by <a href="http://www.paulegan.net/">Paul Egan</a><p></div><div class='footerMenu'><ul><li class="firstMenuItem">E&amp;OE&nbsp;</li>
+</ul></div>

@@ -1,0 +1,29 @@
+User-agent: *
+Disallow: /Connections/
+Disallow: /core/
+Disallow: /install/
+Disallow: */admin/
+Disallow: /admin/
+Disallow: /index.old.php
+Disallow: /mockup.php
+Disallow: /product/product.php?*tagID*
+Disallow: /product/product.php?*price=*
+Disallow: /products/basket/
+Disallow: /products/payments/
+Disallow: /news/includes/rss.ajax.php
+Disallow: /Resource/
+Disallow: /sitemap.xml
+Disallow: /sitemap.txt
+Disallow: /sitemap.html
+Disallow: /search/
+Disallow: /Scripts/
+Disallow: /temp.php
+Disallow: /test.php
+Disallow: /temp.htm
+Disallow: /test.htm
+Disallow: /temp.html
+Disallow: /test.html
+Disallow: /Templates/
+Disallow: /Uploads/users/
+
+

@@ -1,0 +1,31 @@
+#categoryList ul {
+	padding: 0px;
+	padding-left: 10px;	
+	margin:0px;
+	list-style-type: none;
+}
+#categoryList ul li {
+		list-style-type: none;
+	padding: 0px;padding-top:5px;
+
+	padding-left: 20px;	
+	width: auto;
+	background-position: 2px 2px;
+	margin:0px;
+	
+	
+}
+
+/* move first ul to margin */
+#categoryList > ul {
+	padding:0px;
+}
+
+#categoryList .hover {
+	visibility :hidden;
+}
+
+#categoryList li:hover > .hover {
+	visibility:visible;
+}
+
